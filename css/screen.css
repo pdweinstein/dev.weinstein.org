@@ -3,6 +3,11 @@
   	src: url( '../font/PRNumber3.ttf' );
 }
 
+@font-face {
+	font-family: 'PrintChar';
+  	src: url( '../font/PrintChar21.ttf' );
+}
+
 body {
 	padding-top: 20px;
 	padding-bottom: 20px;
@@ -12,12 +17,17 @@ body {
   	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAH0lEQVQIW2NkYGD4D8SMQAwGMAZcEC4DU4ksANLxHwCC4QQE/R3QmAAAAABJRU5ErkJggg==) repeat;
 }
 
+nav {
+	font-family: PrintChar !important;
+}
+
 .blink {
     animation-duration: 1s;
     animation-name: blink;
     animation-iteration-count: infinite;
     animation-timing-function: steps(2, start);
 }
+
 @keyframes blink {
     80% {
         visibility: hidden;
@@ -26,21 +36,24 @@ body {
 
 .msg {
 	padding: 25px 50px 25px 25px ;
+	overflow: auto;
+}
+
+.msg::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+.msg::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.msg::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
 }
 
 .window .bar.info ul {
   margin: 0 2%;
-}
-
-.window .scroll.bottom:before, .window .scroll.bottom:after, .window .scroll.right:before, .window .scroll.right:after {
-  height: 23px;
-  width: 23px;
-  background: url("https://dl.dropboxusercontent.com/u/216723067/pixel-arrow.svg") center/16px no-repeat;
-  background-color: white;
-  border: 1px solid black;
-  content: "";
-  float: left;
-  z-index: 3;
 }
 
 .window {
@@ -164,6 +177,7 @@ body {
   top: 7px;
   z-index: 1;
   list-style: none;
+  opacity: 1.0;
 }
 .window .bar .maximize {
   height: 14px;
@@ -184,38 +198,4 @@ body {
   left: -2px;
   position: absolute;
   top: -2px;
-}
-.window .scroll {
-  background: white;
-  border: 1px solid black;
-  margin-top: 35px;
-  position: absolute;
-}
-.window .scroll.bottom {
-  bottom: 0;
-  width: 100%;
-}
-.window .scroll.bottom:before, .window .scroll.bottom:after {
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
-}
-.window .scroll.bottom:after {
-  margin-right: 27px;
-  position: absolute;
-  right: 0;
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
-}
-.window .scroll.right {
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAGklEQVQIW2NkYGD4D8SMQAwGcAY2AbBKDBUAVuYCBQPd34sAAAAASUVORK5CYII=) repeat;
-  bottom: 24px;
-  right: 0;
-  top: 2px;
-}
-.window .scroll.right:after {
-  -webkit-transform: rotateX(180deg);
-  transform: rotateX(180deg);
-  bottom: 0;
-  left: 0;
-  position: absolute;
 }
