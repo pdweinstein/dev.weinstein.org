@@ -36,19 +36,19 @@ class template {
 		4 => array( "name" => "robots", "content" => "INDEX,FOLLOW" ),
 	); 
 	var $js = array( 
-		0 => array( "type" => "text/javascript", "src" => "controller/client/js/jquery-jquery-3.3.1.min.js" ),
-		1 => array( "type" => "text/javascript", "src" => "controller/client/js/bootstrap.min.js" ),
-		2 => array( "type" => "text/javascript", "src" => "controller/client/js/jquery.ui.min.js" )
+		0 => array( "type" => "text/javascript", "src" => "https://storage.googleapis.com/personal-dev-site.appspot.com/controller/client/js/jquery-3.3.1.min.js" ),
+		1 => array( "type" => "text/javascript", "src" => "https://storage.googleapis.com/personal-dev-site.appspot.com/controller/client/js/bootstrap.min.js" ),
+		2 => array( "type" => "text/javascript", "src" => "https://storage.googleapis.com/personal-dev-site.appspot.com/controller/client/js/jquery-ui.min.js" )
 	);
 
 	var $link = array(
-				0 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "view/client/css/bootstrap.css", "media" => "screen" ),
-				1 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "view/client/css/screen.css", "media" => "screen" ),
-				2 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "view/client/css/jquery-ui.css", "media" => "screen" ),
-				3 => array( "rel" => "alternate", "type" => "application/atom+xml", "href" => "http://feeds.feedburner.com/pdweinstein?format=xml" ),
-				4 => array( "rel" => "shortcut icon", "type" => "image/x-icon", "href" => "view/client/ico/favicon.ico" ),
-				5 => array( "rel" => "icon", "type" => "image/x-icon", "href" => "view/client/ico//favicon.ico" )
-			   );
+		0 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/css/bootstrap.css", "media" => "screen" ),
+		1 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/css/screen.css", "media" => "screen" ),
+		2 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/css/jquery-ui.css", "media" => "screen" ),
+		3 => array( "rel" => "alternate", "type" => "application/atom+xml", "href" => "http://feeds.feedburner.com/pdweinstein?format=xml" ),
+		4 => array( "rel" => "shortcut icon", "type" => "image/x-icon", "href" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/ico/favicon.ico" ),
+		5 => array( "rel" => "icon", "type" => "image/x-icon", "href" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/ico//favicon.ico" )
+	);
 	
 	/**
 	 *	__construct function, let's get this object created.
