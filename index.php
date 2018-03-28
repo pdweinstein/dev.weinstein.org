@@ -1,8 +1,16 @@
 <?php
 
+	include_once( 'config.php' );
 	include_once( 'view/server/php/class.template.php' );
+	include_once( 'model/server/php/goodReads.php' );
+
 	$template = new Template;
-	
+
+        $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
+        
+        //Grab the shelf array and store it in $books variable
+        $books = $goodReads->getShelf();
+
 	// First output our page header			   
 	$template->outputHTML( "<html><head>\n" );
 	$template->outputMeta( $template->meta );	
@@ -35,7 +43,15 @@
 				<p><ul>
 					<li><a href=\"http://pdw.weinstein.org/about/index.html\" alt\"Personal Blog\">Blog</a></li>
 					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a></li>
-					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a></li>
+					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> - Current Reading,
+	");
+
+	$book = $books[0];	
+	$template->outputHTML( "<a href='" .$book->link. "' alt='" .$book->title. "'> " .$book->title. " </a>");
+
+	$template->outputHTML("
+	
+					
 					<li><a href=\"https://plus.google.com/u/0/104233578006014995011\" alt\"Google+\">G+</a></li>
 					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
 					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a></li>
@@ -53,7 +69,6 @@
 		</p>
 	</nav>
 	");
-
 
 	// Put JS load code at end of doc to keep everything quick for 
 	// page load
