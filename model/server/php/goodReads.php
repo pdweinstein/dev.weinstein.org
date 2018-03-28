@@ -48,9 +48,9 @@ class goodReads
                                 'page'        => NULL,
                                 'per_page'    => 20,
                                 'use_gbooks'  => TRUE,
-                                'cache'       => TRUE,
+                                'cache'       => FALSE,
                                 'cache_hours' => 12,
-                                'cache_file'  => '/var/www/html/dev.weinstein.org/include/goodReads.xml',);
+                                'cache_file'  => '',);
 
     /**
      * Base GoodReads XML URL
