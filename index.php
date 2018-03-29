@@ -3,14 +3,14 @@
 	include_once( 'config.php' );
 	include_once( 'view/server/php/class.template.php' );
 	include_once( 'model/server/php/goodReads.php' );
-
-	$template = new Template;
+	include_once( 'model/server/php/twitter-api-php/TwitterAPIExchange.php' );
 
         $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
-        
-        //Grab the shelf array and store it in $books variable
         $books = $goodReads->getShelf();
 
+	$twitter = new TwitterAPIExchange( $twitterSettings );
+
+	$template = new Template;
 	// First output our page header			   
 	$template->outputHTML( "<html><head>\n" );
 	$template->outputMeta( $template->meta );	
@@ -43,21 +43,34 @@
 				<p><ul>
 					<li><a href=\"http://pdw.weinstein.org/about/index.html\" alt\"Personal Blog\">Blog</a></li>
 					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a></li>
-					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> - Current Reading,
+					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> <ul> <li>Current Reading,
 	");
 
 	$book = $books[0];	
 	$template->outputHTML( "<a href='" .$book->link. "' alt='" .$book->title. "'> " .$book->title. " </a>");
 
 	$template->outputHTML("
-	
-					
+					</li></ul>
 					<li><a href=\"https://plus.google.com/u/0/104233578006014995011\" alt\"Google+\">G+</a></li>
 					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
 					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a></li>
 					<li><a href=\"https://www.linkedin.com/in/pdweinstein\" alt\"LinkedIn\">LinkedIn</a></li>
 					<li><a href=\"https://www.reddit.com/user/pdweinstein\" alt\"Reddit\">Reddit</a></li>
-					<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a></li>
+				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a></li>
+	");
+
+	$tweets = json_decode( $twitter->setGetfield( $getfield )
+                ->buildOauth( $twitterURL, $requestMethod )
+                ->performRequest() );
+
+	$tweet = $tweets[0];
+	$template->outputHTML( "<a href='https://twitter.com/pdweinstein/status/" .$tweet->id_str. "' alt='" .$tweet->text. "'> " .$tweet->text. " </a>");
+
+
+	$template->outputHTML( "<a href='" .$book->link. "' alt='" .$book->title. "'> " .$book->title. " </a>");
+
+	$template->outputHTML("
+					</li></ul>
 					<li><a href=\"https://www.youtube.com/user/pdweinstein\" alt\"YuouTube\">YouTube</a></li>
 				</ul></p>
 				<p>- Paul </p>
