@@ -4,6 +4,7 @@
 	include_once( 'view/server/php/class.template.php' );
 	include_once( 'model/server/php/goodReads.php' );
 	include_once( 'model/server/php/twitter-api-php/TwitterAPIExchange.php' );
+	include_once( 'model/server/php/phpFlickr.php' );
 
 #	$memcache = new Memcache;
 
@@ -11,6 +12,8 @@
         $books = $goodReads->getShelf();
 
 	$twitter = new TwitterAPIExchange( $twitterSettings );
+
+	$flickr = new phpFlickr( FLICKR_API );
 
 	$template = new Template;
 	// First output our page header			   
@@ -45,7 +48,7 @@
 				<p><ul>
 					<li><a href=\"http://pdw.weinstein.org/about/index.html\" alt\"Personal Blog\">Blog</a></li>
 					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a></li>
-					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> <ul> <li>
+					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> <ul> <li> Latest Reading:
 	");
 
 	$book = $books[0];	
@@ -55,7 +58,15 @@
 					</li></ul>
 					<li><a href=\"https://plus.google.com/u/0/104233578006014995011\" alt\"Google+\">G+</a></li>
 					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
-					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a></li>
+					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>Latest Image:
+	");
+
+	$recent = $flickr->people_getPublicPhotos( FLICKR_USER );
+	$mostRecent = $recent['photos']['photo'][0]['id'];
+	$template->outputHTML( "<a href='' alt=''> </a>");
+
+	$template->outputHTML("
+					</li></ul>
 					<li><a href=\"https://www.linkedin.com/in/pdweinstein\" alt\"LinkedIn\">LinkedIn</a></li>
 					<li><a href=\"https://www.reddit.com/user/pdweinstein\" alt\"Reddit\">Reddit</a></li>
 				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a><ul><li>
