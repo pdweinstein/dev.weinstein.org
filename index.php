@@ -5,6 +5,8 @@
 	include_once( 'model/server/php/goodReads.php' );
 	include_once( 'model/server/php/twitter-api-php/TwitterAPIExchange.php' );
 
+#	$memcache = new Memcache;
+
         $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
         $books = $goodReads->getShelf();
 
@@ -43,7 +45,7 @@
 				<p><ul>
 					<li><a href=\"http://pdw.weinstein.org/about/index.html\" alt\"Personal Blog\">Blog</a></li>
 					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a></li>
-					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> <ul> <li>Current Reading,
+					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> <ul> <li>
 	");
 
 	$book = $books[0];	
@@ -56,21 +58,23 @@
 					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a></li>
 					<li><a href=\"https://www.linkedin.com/in/pdweinstein\" alt\"LinkedIn\">LinkedIn</a></li>
 					<li><a href=\"https://www.reddit.com/user/pdweinstein\" alt\"Reddit\">Reddit</a></li>
-				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a></li>
+				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a><ul><li>
 	");
 
 	$tweets = json_decode( $twitter->setGetfield( $getfield )
                 ->buildOauth( $twitterURL, $requestMethod )
-                ->performRequest() );
+		->performRequest() );
+
+	// Set cache
+	//$memcache->set( 'tweets_pdw', $tweets );
+
+	// Get cached
+	//$tweets = $memcache->get( 'tweets_pdw' );
 
 	$tweet = $tweets[0];
-	$template->outputHTML( "<a href='https://twitter.com/pdweinstein/status/" .$tweet->id_str. "' alt='" .$tweet->text. "'> " .$tweet->text. " </a>");
-
-
-	$template->outputHTML( "<a href='" .$book->link. "' alt='" .$book->title. "'> " .$book->title. " </a>");
+	$template->outputHTML( "<a href='https://twitter.com/pdweinstein/status/" .$tweet->id_str. "' alt='" .$tweet->text. "'> Latest Tweet:</a> " .$tweet->text. "</li></ul>");
 
 	$template->outputHTML("
-					</li></ul>
 					<li><a href=\"https://www.youtube.com/user/pdweinstein\" alt\"YuouTube\">YouTube</a></li>
 				</ul></p>
 				<p>- Paul </p>
