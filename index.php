@@ -62,8 +62,7 @@
 	");
 
 	$recent = $flickr->people_getPublicPhotos( FLICKR_USER );
-	$mostRecent = $recent['photos']['photo'][0]['id'];
-	$template->outputHTML( "<a href='' alt=''> </a>");
+	$template->outputHTML( "<a href='https://www.flickr.com/photos/pdweinstein/" .$recent['photos']['photo'][0]['id']. "/in/photostream/' alt='" .$recent['photos']['photo'][0]['title']. "'>" .$recent['photos']['photo'][0]['title']. "</a>");
 
 	$template->outputHTML("
 					</li></ul>
