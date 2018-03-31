@@ -34,6 +34,12 @@ class template {
 		2 => array( "name" => "copyright", "content" => "Paul Weinstein" ),
 		3 => array( "name" => "author", "content" => "Paul Weinstein" ),
 		4 => array( "name" => "robots", "content" => "INDEX,FOLLOW" ),
+		5 => array( "property" => "og:type", "content" => "profile" ),
+		6 => array( "property" => "og:title", "content" => "www.weinstein.org" ),
+		7 => array( "property" => "og:url", "content" => "https://www.weinstein.org/" ),
+		8 => array( "property" => "og:image", "content" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/png/thumbnail.png" ),
+		9 => array( "property" => "profile:first_name", "content" => "Paul" ),
+		10 => array( "property" => "profile:last_name", "content" => "Weinstein" )
 	); 
 	var $js = array( 
 		0 => array( "type" => "text/javascript", "src" => "https://storage.googleapis.com/personal-dev-site.appspot.com/controller/client/js/jquery-3.3.1.min.js" ),

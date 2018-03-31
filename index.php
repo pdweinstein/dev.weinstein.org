@@ -17,7 +17,7 @@
 
 	$template = new Template;
 	// First output our page header			   
-	$template->outputHTML( "<html><head>\n" );
+	$template->outputHTML( "<html xmlns='http://www.w3.org/1999/xhtml' xmlns:fb='http://ogp.me/ns/fb#'><head>\n" );
 	$template->outputMeta( $template->meta );	
 
 	$template->outputHTML( "<title>" );
