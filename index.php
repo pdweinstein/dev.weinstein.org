@@ -2,18 +2,23 @@
 
 	include_once( 'config.php' );
 	include_once( 'view/server/php/class.template.php' );
+	include_once( 'model/server/php/class.outside.php' );
 	include_once( 'model/server/php/goodReads.php' );
 	include_once( 'model/server/php/twitter-api-php/TwitterAPIExchange.php' );
 	include_once( 'model/server/php/phpFlickr.php' );
 
-	$memcache = new Memcache;
+	if ( $location != 'local' ) {
+		$memcache = new Memcache;
+	}
 
-        $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
-        $books = $goodReads->getShelf();
+    $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
+    $books = $goodReads->getShelf();
 
 	$twitter = new TwitterAPIExchange( $twitterSettings );
 
 	$flickr = new phpFlickr( FLICKR_API );
+
+	$elsewhere = new Outside;
 
 	$template = new Template;
 	// First output our page header			   
@@ -47,7 +52,14 @@
 				<p>Meanwhile, elsewhere on the web…</p>
 				<p><ul>
 					<li><a href=\"http://pdw.weinstein.org/about/index.html\" alt\"Personal Blog\">Blog</a></li>
-					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a></li>
+					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a><ul><li>Latest Commit:
+	");					
+					$githubEvents = $elsewhere->getGitHubEvents();
+					$GHrecent = $githubEvents[0];
+					$template->outputHTML( "<a href=\"" .$GHrecent->payload->commits[0]->url. "\">" .substr( $GHrecent->payload->commits[0]->sha, 0, 6 ). "</a> to repository <a href=\"https://www.gitpub.com/" .$GHrecent->repo->name. "\">" .$GHrecent->repo->name. "</a>"  ); 
+					
+	$template->outputHTML("
+					</li></ul>					
 					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> <ul> <li> Latest Reading:
 	");
 
@@ -72,15 +84,22 @@
 	");
 
 	// Check cache first
-	if ( !$tweets = $memcache->get( 'tweets_pdw' )) {
+	if ( $location != 'local' ) {
+		if ( !$tweets = $memcache->get( 'tweets_pdw' )) {
 
+			$tweets = json_decode( $twitter->setGetfield( $getfield )
+                ->buildOauth( $twitterURL, $requestMethod )
+				->performRequest() );
+
+			// Set cache
+			$memcache->set( 'tweets_pdw', $tweets );
+		}
+	} else {
+		
 		$tweets = json_decode( $twitter->setGetfield( $getfield )
-                	->buildOauth( $twitterURL, $requestMethod )
+        	->buildOauth( $twitterURL, $requestMethod )
 			->performRequest() );
-
-		// Set cache
-		$memcache->set( 'tweets_pdw', $tweets );
-
+		
 	}
 
 	$tweet = $tweets[0];
