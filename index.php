@@ -60,7 +60,7 @@
 			
 			$githubEvents = $elsewhere->getGitHubEvents();
 			
-			memcache->set( 'hub_pdw', $githubEvents );
+			$memcache->set( 'hub_pdw', $githubEvents );
 			
 		}
 		
