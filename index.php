@@ -6,7 +6,7 @@
 	include_once( 'model/server/php/twitter-api-php/TwitterAPIExchange.php' );
 	include_once( 'model/server/php/phpFlickr.php' );
 
-#	$memcache = new Memcache;
+	$memcache = new Memcache;
 
         $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
         $books = $goodReads->getShelf();
@@ -71,15 +71,17 @@
 				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a><ul><li>
 	");
 
-	$tweets = json_decode( $twitter->setGetfield( $getfield )
-                ->buildOauth( $twitterURL, $requestMethod )
-		->performRequest() );
+	// Check cache first
+	if ( !$tweets = $memcache->get( 'tweets_pdw' )) {
 
-	// Set cache
-	//$memcache->set( 'tweets_pdw', $tweets );
+		$tweets = json_decode( $twitter->setGetfield( $getfield )
+                	->buildOauth( $twitterURL, $requestMethod )
+			->performRequest() );
 
-	// Get cached
-	//$tweets = $memcache->get( 'tweets_pdw' );
+		// Set cache
+		$memcache->set( 'tweets_pdw', $tweets );
+
+	}
 
 	$tweet = $tweets[0];
 	$template->outputHTML( "<a href='https://twitter.com/pdweinstein/status/" .$tweet->id_str. "' alt='" .$tweet->text. "'> Latest Tweet:</a> " .$tweet->text. "</li></ul>");
