@@ -54,9 +54,20 @@
 					<li><a href=\"http://pdw.weinstein.org/about/index.html\" alt\"Personal Blog\">Blog</a></li>
 					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a><ul><li>Latest Commit:
 	");					
-					$githubEvents = $elsewhere->getGitHubEvents();
-					$GHrecent = $githubEvents[0];
-					$template->outputHTML( "<a href=\"" .$GHrecent->payload->commits[0]->url. "\">" .substr( $GHrecent->payload->commits[0]->sha, 0, 6 ). "</a> to repository <a href=\"https://www.gitpub.com/" .$GHrecent->repo->name. "\">" .$GHrecent->repo->name. "</a>"  ); 
+	
+	if ( $location != 'local' ) {
+		if ( !$githubEvents = $memcache->get( 'hub_pdw' )) {
+			
+			$githubEvents = $elsewhere->getGitHubEvents();
+			
+			memcache->set( 'hub_pdw', $githubEvents );
+			
+		}
+		
+	}
+					
+	$GHrecent = $githubEvents[0];
+	$template->outputHTML( "<a href=\"https://www.github.com/" .$GHrecent->repo->name. "/commit/" .$GHrecent->payload->commits[0]->sha. "\">" .substr( $GHrecent->payload->commits[0]->sha, 0, 6 ). "</a> to repository <a href=\"https://www.github.com/" .$GHrecent->repo->name. "\">" .$GHrecent->repo->name. "</a>"  ); 
 					
 	$template->outputHTML("
 					</li></ul>					
