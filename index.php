@@ -3,6 +3,7 @@
 	include_once( 'config.php' );
 	include_once( 'view/server/php/class.template.php' );
 	include_once( 'model/server/php/class.outside.php' );
+	include_once( 'model/server/php/b-sig.php' );
 	include_once( 'model/server/php/goodReads.php' );
 	include_once( 'model/server/php/twitter-api-php/TwitterAPIExchange.php' );
 	include_once( 'model/server/php/phpFlickr.php' );
@@ -10,6 +11,8 @@
 	if ( $location != 'local' ) {
 		$memcache = new Memcache;
 	}
+
+	$seti = new RPC;
 
     $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
     $books = $goodReads->getShelf();
@@ -52,6 +55,12 @@
 				<p>Meanwhile, elsewhere on the web…</p>
 				<p><ul>
 					<li><a href=\"http://pdw.weinstein.org/about/index.html\" alt\"Personal Blog\">Blog</a></li>
+					<li><a href=\"\">Boinc<ul><li>
+	");
+	
+	echo $seti->getResults();
+	
+	$template->outputHTML("	
 					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a><ul><li>Last commit was
 	");					
 	
