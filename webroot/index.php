@@ -112,7 +112,7 @@
 				->performRequest() );
 
 			// Set cache
-			$memcache->set( 'tweets_pdw', $tweets );
+			$memcache->set( 'tweets_pdw', $tweets, MEMCACHE_COMPRESSED, 3600 );
 		}
 	} else {
 		
