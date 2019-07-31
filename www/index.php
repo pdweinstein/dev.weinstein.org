@@ -14,8 +14,8 @@
 
 	//$seti = new RPC;
 
-    $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
-    $books = $goodReads->getShelf();
+        $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
+        $books = $goodReads->getShelf();
 
 	$twitter = new TwitterAPIExchange( $twitterSettings );
 
@@ -88,7 +88,6 @@
 
 	$template->outputHTML("
 					</li></ul>
-					<li><a href=\"https://plus.google.com/u/0/104233578006014995011\" alt\"Google+\">G+</a></li>
 					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
 					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>Latest photo is
 	");
