@@ -1,12 +1,12 @@
 <?php
 
 	include_once( '../config.php' );
-	include_once( '../view/server/php/class.template.php' );
-	include_once( '../model/server/php/class.outside.php' );
-	include_once( '../model/server/php/b-sig.php' );
-	include_once( '../model/server/php/goodReads.php' );
-	include_once( '../model/server/php/twitter-api-php/TwitterAPIExchange.php' );
-	include_once( '../model/server/php/phpFlickr.php' );
+	include_once( '../lib/view/server/php/class.template.php' );
+	include_once( '../lib/model/server/php/class.outside.php' );
+	include_once( '../lib/model/server/php/b-sig.php' );
+	include_once( '../lib/model/server/php/goodReads.php' );
+	include_once( '../lib/model/server/php/twitter-api-php/TwitterAPIExchange.php' );
+	include_once( '../lib/model/server/php/phpFlickr.php' );
 
 	if ( $location != 'local' ) {
 		$memcache = new Memcache;
@@ -69,7 +69,7 @@
 			
 			$githubEvents = $elsewhere->getGitHubEvents();
 			
-			$memcache->set( 'hub_pdw', $githubEvents );
+			$memcache->set( 'hub_pdw', $githubEvents, MEMCACHE_COMPRESSED, 3600 );
 			
 		}
 		
