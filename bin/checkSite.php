@@ -5,7 +5,27 @@
   // Script to get a URL/IP and check HTTP Status
 
   // Config Run Enviroment
-  error_reporting( 0 );
+  error_reporting( 1 );
+  include_once( '../config.php' );
+  include_once( '../lib/PHPMailer.php' );
+  include_once( '../lib/SMTP.php' );
+
+  use PHPMailer\PHPMailer\PHPMailer;
+  $mail = new PHPMailer( true );
+
+  // SMTP settings
+  // SMTP Debug:
+  // 0 = off (for production use)
+  // 1 = client messages
+  // 2 = client and server messages
+  $mail->SMTPDebug = 0; 
+  $mail->isSMTP();
+  $mail->Host = $SMTPHost;
+  $mail->SMTPAuth = true;
+  $mail->Username = $SMTPUser;
+  $mail->Password = $SMTPPass;
+  $mail->SMTPSecure = 'tls';
+  $mail->Port = $SMTPPort;
 
   // Get args from command-line
   if ( $argc > 3 ) {
@@ -37,10 +57,18 @@
     $output = curl_exec( $ch );
     $httpcode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
     curl_close( $ch );
-echo "Here is: " . $httpcode . "\n\n";
-    if (( $rhttpcodei == 0 ) OR ( httpcode >= 400 )) {
-echo "sending\n\n";
-      mail( $email, "", "Site notification for " .$url. " Status code: " .httpcode, "From: <no-reply@weinstein.org>\r\n");
+
+    if (( $httpcode == 0 ) OR ( $httpcode >= 400 )) {
+
+      // Recipient
+      $mail->setFrom( 'auto@weinstein.org', 'Mailer' );
+      $mail->addAddress( $email, '' );
+      $mail->addReplyTo( 'do-no-reply@weinstein.org', 'No Reply');
+
+      // Content
+      $mail->Subject = 'Site Alert';
+      $mail->Body    = 'Site ' .$url. ' is returning status code: ' .$httpcode;
+      $mail->send();
 
     }
   }
