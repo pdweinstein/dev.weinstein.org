@@ -55,7 +55,7 @@
 				<p>Meanwhile, elsewhere on the web…</p>
 				<p><ul>
 					<li><a href=\"http://pdw.weinstein.org/about/index.html\" alt\"Personal Blog\">Blog</a></li>
-					<li><a href=\"\">Boinc<ul><li>
+<!---					<li><a href=\"\">Boinc<ul><li> --->
 	");
 	
 	//echo $seti->getResults();
