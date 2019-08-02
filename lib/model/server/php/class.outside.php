@@ -52,6 +52,17 @@ class outside {
 		
 	}
 	
+	public function getInstaPosts( $token, $count ) {
+
+		$instaURL = "https://api.instagram.com/v1/users/self/media/recent/?";  
+		$instaURL .="access_token=" .$token. "&count=" .$count;
+		$feed = $this->fetchURL( $instaURL );
+		$posts = json_decode( $feed );
+
+		return $posts;	
+
+	}
+
 	function fetchURL( $url ){
 		
 		$curl_handle=curl_init();
