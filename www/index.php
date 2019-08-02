@@ -75,6 +75,15 @@
 		
 	}
 					
+	$template->outputHTML("
+					</li></ul>
+					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
+					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>Latest photo:
+	");
+
+	$recent = $flickr->people_getPublicPhotos( FLICKR_USER );
+	$template->outputHTML( "<a href='https://www.flickr.com/photos/pdweinstein/" .$recent['photos']['photo'][0]['id']. "/in/photostream/' alt='" .$recent['photos']['photo'][0]['title']. "'>" .$recent['photos']['photo'][0]['title']. "</a>");
+
 	$GHrecent = $githubEvents[0];
 	$template->outputHTML( "<a href=\"https://www.github.com/" .$GHrecent->repo->name. "/commit/" .$GHrecent->payload->commits[0]->sha. "\">" .substr( $GHrecent->payload->commits[0]->sha, 0, 6 ). "</a> to repository <a href=\"https://www.github.com/" .$GHrecent->repo->name. "\">" .$GHrecent->repo->name. "</a>"  ); 
 					
@@ -88,15 +97,16 @@
 
 	$template->outputHTML("
 					</li></ul>
-					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
-					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>Latest photo is
+					<li><a href=\"https://www.instagram.com/pdweinstein\" alt\"Instagram\">Instagram</a><ul><li>Latest photo:
 	");
 
-	$recent = $flickr->people_getPublicPhotos( FLICKR_USER );
-	$template->outputHTML( "<a href='https://www.flickr.com/photos/pdweinstein/" .$recent['photos']['photo'][0]['id']. "/in/photostream/' alt='" .$recent['photos']['photo'][0]['title']. "'>" .$recent['photos']['photo'][0]['title']. "</a>");
+	$instaObj = $elsewhere->getInstaPosts( $instaToken, 1 );
+	$instaData = $instaObj->{'data'};
 
+	$template->outputHTML( "<a href='" .$instaData[0]->{'link'}. "' alt='" .$instaData[0]->{'caption'}->{'text'}. "'>" .$instaData[0]->{'caption'}->{'text'}. "</a>" );
+ 
 	$template->outputHTML("
-					</li></ul>
+					</li></ul>					
 					<li><a href=\"https://www.linkedin.com/in/pdweinstein\" alt\"LinkedIn\">LinkedIn</a></li>
 					<li><a href=\"https://www.reddit.com/user/pdweinstein\" alt\"Reddit\">Reddit</a></li>
 				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a><ul><li>
@@ -127,7 +137,6 @@
 	$template->outputHTML("
 					<li><a href=\"https://www.youtube.com/user/pdweinstein\" alt\"YouTube\">YouTube</a></li>
 				</ul></p>
-				<p>- Paul </p>
 		</div>
 	</div>
 	<nav class=\"navbar fixed-bottom navbar-light bg-light\">
