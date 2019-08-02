@@ -100,7 +100,16 @@
 					<li><a href=\"https://www.instagram.com/pdweinstein\" alt\"Instagram\">Instagram</a><ul><li>Latest photo:
 	");
 
-	$instaObj = $elsewhere->getInstaPosts( $instaToken, 1 );
+	if ( $location != 'local' ) {
+		if ( !$instaObj = $memcache->get( 'insta_pdw' )) {
+
+			$instaObj = $elsewhere->getInstaPosts( $instaToken, 1 );
+			$memcache->set( 'insta_pdw', $instaObj, MEMCACHE_COMPRESSED, 3600 );
+			
+		}
+		
+	}
+	
 	$instaData = $instaObj->{'data'};
 
 	$template->outputHTML( "<a href='" .$instaData[0]->{'link'}. "' alt='" .$instaData[0]->{'caption'}->{'text'}. "'>" .$instaData[0]->{'caption'}->{'text'}. "</a>" );
