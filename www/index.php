@@ -1,17 +1,14 @@
 <?php
 
 	include_once( '../config.php' );
-	include_once( '../lib/view/server/php/class.template.php' );
-	include_once( '../lib/model/server/php/class.outside.php' );
-	include_once( '../lib/model/server/php/b-sig.php' );
-	include_once( '../lib/model/server/php/goodReads.php' );
-	include_once( '../lib/model/server/php/twitter-api-php/TwitterAPIExchange.php' );
-	include_once( '../lib/model/server/php/phpFlickr.php' );
+	include_once( 'include.php' );
+	include_once( 'pre.php' );
 
 	if ( $location != 'local' ) {
 		$memcache = new Memcache;
 	}
 
+/*
 	//$seti = new RPC;
 
         $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
@@ -22,7 +19,7 @@
 	$flickr = new phpFlickr( FLICKR_API );
 
 	$elsewhere = new Outside;
-
+*/
 	$template = new Template;
 	// First output our page header			   
 	$template->outputHTML( "<html xmlns='http://www.w3.org/1999/xhtml' xmlns:fb='http://ogp.me/ns/fb#'><head>\n" );
@@ -64,29 +61,8 @@
 					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a><ul><li>Last commit was
 	");					
 	
-	if ( $location != 'local' ) {
-		if ( !$githubEvents = $memcache->get( 'hub_pdw' )) {
-			
-			$githubEvents = $elsewhere->getGitHubEvents();
-			
-			$memcache->set( 'hub_pdw', $githubEvents, MEMCACHE_COMPRESSED, 3600 );
-			
-		}
-		
-	}
-					
-	$GHrecent = $githubEvents[0];
 	$template->outputHTML( "<a href=\"https://www.github.com/" .$GHrecent->repo->name. "/commit/" .$GHrecent->payload->commits[0]->sha. "\">" .substr( $GHrecent->payload->commits[0]->sha, 0, 6 ). "</a> to repository <a href=\"https://www.github.com/" .$GHrecent->repo->name. "\">" .$GHrecent->repo->name. "</a>"  ); 
 					
-	$template->outputHTML("
-					</li></ul>
-					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
-					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>Latest photo:
-	");
-
-	$recent = $flickr->people_getPublicPhotos( FLICKR_USER );
-	$template->outputHTML( "<a href='https://www.flickr.com/photos/pdweinstein/" .$recent['photos']['photo'][0]['id']. "/in/photostream/' alt='" .$recent['photos']['photo'][0]['title']. "'>" .$recent['photos']['photo'][0]['title']. "</a>");
-
 	$template->outputHTML("
 					</li></ul>					
 					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> <ul> <li> Currently reading 
@@ -94,23 +70,18 @@
 
 	$book = $books[0];	
 	$template->outputHTML( "<a href='" .$book->link. "' alt='" .$book->title. "'> " .$book->title. " </a>");
+	$template->outputHTML("
+					</li></ul>
+					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
+					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>Latest photo:
+	");
+
+	$template->outputHTML( "<a href='https://www.flickr.com/photos/pdweinstein/" .$recent['photos']['photo'][0]['id']. "/in/photostream/' alt='" .$recent['photos']['photo'][0]['title']. "'>" .$recent['photos']['photo'][0]['title']. "</a>");
 
 	$template->outputHTML("
 					</li></ul>
 					<li><a href=\"https://www.instagram.com/pdweinstein\" alt\"Instagram\">Instagram</a><ul><li>Latest photo:
 	");
-
-	if ( $location != 'local' ) {
-		if ( !$instaObj = $memcache->get( 'insta_pdw' )) {
-
-			$instaObj = $elsewhere->getInstaPosts( $instaToken, 1 );
-			$memcache->set( 'insta_pdw', $instaObj, MEMCACHE_COMPRESSED, 3600 );
-			
-		}
-		
-	}
-	
-	$instaData = $instaObj->{'data'};
 
 	$template->outputHTML( "<a href='" .$instaData[0]->{'link'}. "' alt='" .$instaData[0]->{'caption'}->{'text'}. "'>" .$instaData[0]->{'caption'}->{'text'}. "</a>" );
  
@@ -120,25 +91,6 @@
 					<li><a href=\"https://www.reddit.com/user/pdweinstein\" alt\"Reddit\">Reddit</a></li>
 				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a><ul><li>
 	");
-
-	// Check cache first
-	if ( $location != 'local' ) {
-		if ( !$tweets = $memcache->get( 'tweets_pdw' )) {
-
-			$tweets = json_decode( $twitter->setGetfield( $getfield )
-                ->buildOauth( $twitterURL, $requestMethod )
-				->performRequest() );
-
-			// Set cache
-			$memcache->set( 'tweets_pdw', $tweets, MEMCACHE_COMPRESSED, 3600 );
-		}
-	} else {
-		
-		$tweets = json_decode( $twitter->setGetfield( $getfield )
-        	->buildOauth( $twitterURL, $requestMethod )
-			->performRequest() );
-		
-	}
 
 	$tweet = $tweets[0];
 	$template->outputHTML( "<a href='https://twitter.com/pdweinstein/status/" .$tweet->id_str. "' alt='" .$tweet->text. "'> Latest Tweet:</a> " .$tweet->text. "</li></ul>");
@@ -150,7 +102,7 @@
 	</div>
 	<nav class=\"navbar fixed-bottom navbar-light bg-light\">
 		<p>
-			]LOAD WWW.WEINSTEIN.ORG <br/> ]RUN <br/> COPYRIGHT PAUL WEINSTEIN (c) 1997 - 2018
+			]LOAD WWW.WEINSTEIN.ORG <br/> ]RUN <br/> COPYRIGHT PAUL WEINSTEIN (c) 1997 - 2019
 		</p>
 	</nav>
 	");
