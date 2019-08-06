@@ -49,11 +49,11 @@
 				<p>Latest Post: " .ucfirst( $latest ). "</p> 
 	");
 
-	if( $latest == 'flickr' ) {
+	//if( $latest == 'flickr' ) {
 	
 		$template->outputFlickr( $feed['flickr'] );
 
-	}
+	//}
 
 	$template->outputHTML("
 				<p>Elsewhere:</p>

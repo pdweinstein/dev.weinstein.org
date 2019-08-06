@@ -139,7 +139,7 @@ class template {
 
 	public function outputFlickr( $feed ) {
 
-		echo "<p><img src=\"https://www.flickr.com/photos/pdweinstein/" .$feed['photo']['id']. "/sizes/c/\" alt=\"" .$feed['photo']['title']['_content']. "\"></p>";
+		echo "<p><img src=\"https://live.staticflickr.com/" .$feed['photo']['server']. "/" .$feed['photo']['id']. "_" .$feed['photo']['secret']. "_c.jpg\" alt=\"" .$feed['photo']['title']['_content']. "\"></p>";
 		echo "<p>" .$feed['photo']['title']['_content'];
 
 		if( !empty( $feed['photo']['description']['_content'] )) {
