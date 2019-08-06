@@ -28,11 +28,13 @@
 		// Instagram Last Post	
 		$instaData = $instaObj->{'data'};
 		$posts['instagram'] = $instaData[0]->{'created_time'};
+		$feed['instagram'] = $instaData;
 
 		// Twitter Last Post
 		$tweet = $tweets[0];
 		$posts['twitter'] = strtotime( $tweet->created_at );
-
+		$feed['twitter'] = $tweets;
+		
 		// Sort Array of Unix Timestamps
 		arsort( $posts );
 
@@ -40,7 +42,6 @@
 		reset( $posts );
 
 		// Pull our winner
-		//var_dump( $posts );
 		$latest = key( $posts );
 		$latestDate = gmdate( "M d Y", $posts[$latest] );
 

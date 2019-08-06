@@ -153,6 +153,24 @@ class template {
 		}
 	}
 
+	public function outputTweet( $feed ) {
+
+		$tweet = preg_replace( '/(http:\/\/[^\s]+)/', '<a href="$0">$0</a>', $feed[0]->text );
+		echo preg_replace( '/@([^\s]+)/', '<a href="http://twitter.com/$1">$0</a>', $tweet );
+	}
+
+	public function outputGithub( $feed ) {
+
+		echo $feed->type. " to repo <a href=https://github.com/" .$feed->repo->name. "\">" .$feed->repo->name. "</a> with message '" .$feed->payload->commits[0]->message. "'";
+	}
+
+	public function outputInstagram( $feed ) {
+
+		echo "<p><img src=\"" .$feed[0]->images->standard_resolution->url. "\" alt=\"" .$feed[0]->caption->text. "\"></p>";
+		echo "<p>" .$feed[0]->caption->text. "</p>";
+
+	}
+
 }
 // Class Dismissed
 
