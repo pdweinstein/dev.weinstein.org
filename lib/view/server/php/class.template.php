@@ -137,6 +137,22 @@ class template {
 	
 	}
 
+	public function outputFlickr( $feed ) {
+
+		echo "<p><img src=\"https://www.flickr.com/photos/pdweinstein/" .$feed['photo']['id']. "/sizes/c/\" alt=\"" .$feed['photo']['title']['_content']. "\"></p>";
+		echo "<p>" .$feed['photo']['title']['_content'];
+
+		if( !empty( $feed['photo']['description']['_content'] )) {
+
+			echo " - " .$feed['photo']['description']['_content']. "</p>";
+
+		} else {
+
+			echo "</p>";
+
+		}
+	}
+
 }
 // Class Dismissed
 

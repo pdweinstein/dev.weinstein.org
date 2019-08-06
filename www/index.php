@@ -1,8 +1,8 @@
 <?php
 
 	include_once( '../config.php' );
-	include_once( 'include.php' );
-	include_once( 'pre.php' );
+	include_once( '../lib/include.php' );
+	include_once( '../lib/pre.php' );
 
 	if ( $location != 'local' ) {
 		$memcache = new Memcache;
@@ -45,13 +45,20 @@
 			</nav>
 		</div>
 		<div class=\"msg\">
-				<p style=\"text-align:right\">23rd May 2018</P>
-				<p>What is Old is New (Again)</p> 
-				<p>It is hard to believe that I’ve been maintaining a personal website in one form or another for over 20 years. Or that almost 10 years has passed since I last reorganized and redesigned it. Or that 3 years have passed since the last blog entry.</p>
-				<p>So here we are, the beginning of something new. Not sure exactly where this will end up, but here we go, the beginning of something new.</p>
-				<p>Meanwhile, elsewhere on the web…</p>
+				<p style=\"text-align:right\">$latestDate</p>
+				<p>Latest Post: " .ucfirst( $latest ). "</p> 
+	");
+
+	if( $latest == 'flickr' ) {
+	
+		$template->outputFlickr( $feed['flickr'] );
+
+	}
+
+	$template->outputHTML("
+				<p>Elsewhere:</p>
 				<p><ul>
-					<li><a href=\"http://pdw.weinstein.org/about/index.html\" alt\"Personal Blog\">Blog</a></li>
+					<li><a href=\"/blog/\" alt\"Personal Blog\">Blog</a><ul><li><a href=\"/blog/index.php/2018/05/what-is-old-is-new-again.html\">What is Old is New (Again)</a></li></ul></li>
 <!---					<li><a href=\"\">Boinc<ul><li> --->
 	");
 	

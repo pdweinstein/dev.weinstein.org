@@ -17,9 +17,12 @@
 		// GitHub Last Post	
 		$GHrecent = $githubEvents[0];
 		$posts['github'] = strtotime( $GHrecent->created_at );
+		$feed['github'] = $GHrecent;
 
 		// Flickr Last Post	
 		$posts['flickr'] = $info['photo']['dateuploaded'];
+		$feed['flickr'] = $info;
+
 		// Goodreads. No date for post (start/end reading dates)
 
 		// Instagram Last Post	
@@ -39,6 +42,7 @@
 		// Pull our winner
 		//var_dump( $posts );
 		$latest = key( $posts );
+		$latestDate = gmdate( "M d Y", $posts[$latest] );
 
 		if( $location != 'local' ) {
 
