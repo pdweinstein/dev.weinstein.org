@@ -92,6 +92,27 @@
 	$template->outputHTML("
 					</li></ul>
 					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
+	");
+
+	$postData = "";
+	$userPosts = $fb->get("/526081044/feed", $accessToken);
+	$postBody = $userPosts->getDecodedBody();
+	$postData = $postBody["data"];
+
+	if (! empty($postData)) {
+
+		foreach ($postData as $k => $v) {
+
+			$postDate = date("d F, Y", strtotime($postData[$k]["created_time"]));
+
+			if(!empty($postData[$k]["message"])) { 
+echo $postData[$k]["message"]; 
+				echo $postDate;
+    			}
+		}
+	}
+
+	$template->outputHTML("
 					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>Latest photo:
 	");
 
