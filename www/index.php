@@ -49,23 +49,23 @@
 				<p>Latest Post: " .ucfirst( $latest ). "</p> 
 	");
 
-//	if( $latest == 'flickr' ) {
+	if( $latest == 'flickr' ) {
 	
-//		$template->outputFlickr( $feed['flickr'] );
+		$template->outputFlickr( $feed['flickr'] );
 
-//	} elseif( $latest == 'twitter' ) {
+	} elseif( $latest == 'twitter' ) {
 
-//		$template->outputTweet( $feed['twitter'] );
+		$template->outputTweet( $feed['twitter'] );
 
-//	} elseif( $latest == 'github' ) {
+	} elseif( $latest == 'github' ) {
 
-//		$template->outputGithub( $feed['github'] );
+		$template->outputGithub( $feed['github'] );
 
-//	} elseif( $latest == 'instagram' ) {
+	} elseif( $latest == 'instagram' ) {
 
 		$template->outputInstagram( $feed['instagram'] );
 
-//	}
+	}
 
 	$template->outputHTML("
 				<p>Elsewhere:</p>
