@@ -139,28 +139,28 @@ class template {
 
 	public function outputFlickr( $feed ) {
 
-		$this->outputHTML( "<p><img src=\"https://live.staticflickr.com/" .$feed['photo']['server']. "/" .$feed['photo']['id']. "_" .$feed['photo']['secret']. "_c.jpg\" alt=\"" .$feed['photo']['title']['_content']. "\"></p>" );
-		$this->outputHTML( "<p>" .$feed['photo']['title']['_content'] );
+		echo "<p><img src=\"https://live.staticflickr.com/" .$feed['photo']['server']. "/" .$feed['photo']['id']. "_" .$feed['photo']['secret']. "_c.jpg\" alt=\"" .$feed['photo']['title']['_content']. "\"></p>";
+		echo "<p>" .$feed['photo']['title']['_content'];
 
 		if( !empty( $feed['photo']['description']['_content'] )) {
 
-			$this->outputHTML( " - " .$feed['photo']['description']['_content']. "</p>" );
+			echo " - " .$feed['photo']['description']['_content']. "</p>";
 
 		} else {
 
-			$this->outputHTML( "</p>" );
+			echo "</p>";
 
 		}
 	}
 
-	public function outputTweet( $feed, $type  ) {
+	public function outputTweet( $feed ) {
 
 		$tweet = preg_replace( '/((http|https):\/\/[^\s]+)/', '<a href="$0">$0</a>', $feed[0]->text );
-		$this->outputHTMl( "<p>" .preg_replace( '/@([^\s]+)/', '<a href="http://twitter.com/$1">$0</a>', $tweet ). "</p>" );
+		echo "<p>" .preg_replace( '/@([^\s]+)/', '<a href="http://twitter.com/$1">$0</a>', $tweet ). "</p>";
 
-		if(( !empty( $feed[0]->media->media_url_https )) AND ( $type == 'main' )) {
+		if( !empty( $feed[0]->media->media_url_https )) {
 
-			$this->outputHTML( "<p><img src=\"" .$feed[0]->media->media_url_https. "\" alt=\"\"></p>" );
+			echo "<p><img src=\"" .$feed[0]->media->media_url_https. "\" alt=\"\"></p>";
 
 		}
 	
@@ -170,7 +170,7 @@ class template {
 
 		if ( $type == 'main' ) {
 
-			$this->outputHTML ( "<p>" .$feed->type. " to repo <a href=https://github.com/" .$feed->repo->name. "\">" .$feed->repo->name. "</a> with message '" .$feed->payload->commits[0]->message. "'</p>" );
+			$this->outputHTML ( $feed->type. " to repo <a href=https://github.com/" .$feed->repo->name. "\">" .$feed->repo->name. "</a> with message '" .$feed->payload->commits[0]->message. "'" );
 	
 		} elseif ( $type == 'list' ) {
 
@@ -182,8 +182,8 @@ class template {
 
 	public function outputInstagram( $feed ) {
 
-		$this->outputHTML( "<p><img src=\"" .$feed[0]->images->standard_resolution->url. "\" alt=\"" .$feed[0]->caption->text. "\"></p>" );
-		$this->outputHTML( "<p>" .$feed[0]->caption->text. "</p>" );
+		echo "<p><img src=\"" .$feed[0]->images->standard_resolution->url. "\" alt=\"" .$feed[0]->caption->text. "\"></p>";
+		echo "<p>" .$feed[0]->caption->text. "</p>";
 
 	}
 
