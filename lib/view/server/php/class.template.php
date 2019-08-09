@@ -155,7 +155,7 @@ class template {
 
 	public function outputTweet( $feed ) {
 
-		$tweet = preg_replace( '/(http:\/\/[^\s]+)/', '<a href="$0">$0</a>', $feed[0]->text );
+		$tweet = preg_replace( '/((http|https):\/\/[^\s]+)/', '<a href="$0">$0</a>', $feed[0]->text );
 		echo "<p>" .preg_replace( '/@([^\s]+)/', '<a href="http://twitter.com/$1">$0</a>', $tweet ). "</p>";
 
 		if( !empty( $feed[0]->media->media_url_https )) {
