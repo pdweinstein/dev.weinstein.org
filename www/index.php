@@ -55,11 +55,11 @@
 
 	} elseif( $latest == 'twitter' ) {
 
-		$template->outputTweet( $feed['twitter'] );
+		$template->outputTweet( $feed['twitter'], 'main' );
 
 	} elseif( $latest == 'github' ) {
 
-		$template->outputGithub( $feed['github'] );
+		$template->outputGithub( $feed['github'], 'main' );
 
 	} elseif( $latest == 'instagram' ) {
 
@@ -79,8 +79,8 @@
 	$template->outputHTML("	
 					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a><ul><li>Last commit was
 	");					
-	
-	$template->outputHTML( "<a href=\"https://www.github.com/" .$GHrecent->repo->name. "/commit/" .$GHrecent->payload->commits[0]->sha. "\">" .substr( $GHrecent->payload->commits[0]->sha, 0, 6 ). "</a> to repository <a href=\"https://www.github.com/" .$GHrecent->repo->name. "\">" .$GHrecent->repo->name. "</a>"  ); 
+
+	$template->outputGithub( $feed['github'], 'list' );	
 					
 	$template->outputHTML("
 					</li></ul>					
@@ -113,14 +113,14 @@ echo $postData[$k]["message"];
 	}
 
 	$template->outputHTML("
-					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>Latest photo:
+					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>
 	");
 
 	$template->outputHTML( "<a href='https://www.flickr.com/photos/pdweinstein/" .$recent['photos']['photo'][0]['id']. "/in/photostream/' alt='" .$recent['photos']['photo'][0]['title']. "'>" .$recent['photos']['photo'][0]['title']. "</a>");
 
 	$template->outputHTML("
 					</li></ul>
-					<li><a href=\"https://www.instagram.com/pdweinstein\" alt\"Instagram\">Instagram</a><ul><li>Latest photo:
+					<li><a href=\"https://www.instagram.com/pdweinstein\" alt\"Instagram\">Instagram</a><ul><li>
 	");
 
 	$template->outputHTML( "<a href='" .$instaData[0]->{'link'}. "' alt='" .$instaData[0]->{'caption'}->{'text'}. "'>" .$instaData[0]->{'caption'}->{'text'}. "</a>" );
@@ -132,8 +132,10 @@ echo $postData[$k]["message"];
 				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a><ul><li>
 	");
 
-	$tweet = $tweets[0];
-	$template->outputHTML( "<a href='https://twitter.com/pdweinstein/status/" .$tweet->id_str. "' alt='" .$tweet->text. "'> Latest Tweet:</a> " .$tweet->text. "</li></ul>");
+
+	$template->outputHTML( "<a href='https://twitter.com/pdweinstein/status/" .$tweet->id_str. "' alt='" .$tweet->text. "'></a> " );
+	$template->outputTweet( $feed['twitter'], 'list' );
+ 	$template->outputHTML( "</li></ul>" );
 
 	$template->outputHTML("
 					<li><a href=\"https://www.youtube.com/user/pdweinstein\" alt\"YouTube\">YouTube</a></li>
