@@ -3,8 +3,45 @@
 	include_once( '../config.php' );
 	include_once( 'include.php' );
 
+        use Facebook\Facebook;
+        use Facebook\Exceptions\FacebookResponseException;
+        use Facebook\Exceptions\FacebookSDKException;
+
+        if ( $location != 'local' ) {
+
+                $memcache = new Memcache;
+
+        	if ( $posts = $memcache->get( 'latest_pdw' )) {
+
+			$posts = $memcache->get( 'latest_pdw' );
+			$githubEvents = $memcache->get( 'hub_pdw' );
+			$recent = $memcache->get( 'flickr_pdw' );
+			$books = $memcache->get( 'reads_pdw' );
+			$instaData = $memcache->get( 'insta_pdw' );
+			$tweets = $memcache->get( 'tweets_pdw' );
+
+		}
+
+	}
+
         if (( $location = 'local' ) OR 
         	( !$posts = $memcache->get( 'latest_pdw' ))) {
+
+		//$seti = new RPC;
+
+        	$goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
+
+        	$twitter = new TwitterAPIExchange( $twitterSettings );
+
+        	$flickr = new phpFlickr( FLICKR_API );
+
+        	$elsewhere = new Outside;
+
+		$fb = new Facebook([
+			'app_id' => $appId,
+			'app_secret' => $appSecret,
+			'default_graph_version' => 'v3.1'
+		]);
 
 		// Get our latest results
        		$books = $goodReads->getShelf();
@@ -56,20 +93,8 @@
 			
 		}
 
-        } else {
-
-		if( $location != 'local' ) {
-
-			$posts = $memcache->get( 'latest_pdw' );
-			$githubEvents = $memcache->get( 'hub_pdw' );
-			$recent = $memcache->get( 'flickr_pdw' );
-			$books = $memcache->get( 'reads_pdw' );
-			$instaData = $memcache->get( 'insta_pdw' );
-			$tweets = $memcache->get( 'tweets_pdw' );
-
-		}
+        }
 
 
-	}
 
 ?>

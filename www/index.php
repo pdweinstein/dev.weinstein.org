@@ -132,8 +132,6 @@ echo $postData[$k]["message"];
 				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a><ul><li>
 	");
 
-
-	$template->outputHTML( "<a href='https://twitter.com/pdweinstein/status/" .$tweet->id_str. "' alt='" .$tweet->text. "'></a> " );
 	$template->outputTweet( $feed['twitter'], 'list' );
  	$template->outputHTML( "</li></ul>" );
 
