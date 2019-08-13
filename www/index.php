@@ -3,13 +3,12 @@
 	include_once( '../config.php' );
 	include_once( '../lib/include.php' );
 	include_once( '../lib/pre.php' );
-
+/*
 	if ( $location != 'local' ) {
 		$memcache = new Memcache;
 	}
 
-/*
-	//$seti = new RPC;
+	$seti = new RPC;
 
         $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
         $books = $goodReads->getShelf();
