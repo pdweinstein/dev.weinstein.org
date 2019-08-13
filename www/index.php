@@ -86,13 +86,12 @@
 					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> <ul> <li> Currently reading 
 	");
 
-	$book = $books[0];	
-	$template->outputHTML( "<a href='" .$book->link. "' alt='" .$book->title. "'> " .$book->title. " </a>");
+	$template->outputHTML( "<a href='" .$book['link']. "' alt='" .$book['title']. "'> " .$book['title']. " </a>");
 	$template->outputHTML("
 					</li></ul>
 					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
 	");
-
+/*
 	$postData = "";
 	$userPosts = $fb->get("/526081044/feed", $accessToken);
 	$postBody = $userPosts->getDecodedBody();
@@ -110,7 +109,7 @@ echo $postData[$k]["message"];
     			}
 		}
 	}
-
+ */
 	$template->outputHTML("
 					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>
 	");
