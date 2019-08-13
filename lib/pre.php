@@ -10,21 +10,26 @@
         if ( $location != 'local' ) {
 
                 $memcache = new Memcache;
+		$memcache->addServer( $mhost, $mport );
 
         	if ( $posts = $memcache->get( 'latest_pdw' )) {
 
-			$posts = $memcache->get( 'latest_pdw' );
-			$githubEvents = $memcache->get( 'hub_pdw' );
-			$recent = $memcache->get( 'flickr_pdw' );
-			$books = $memcache->get( 'reads_pdw' );
-			$instaData = $memcache->get( 'insta_pdw' );
-			$tweets = $memcache->get( 'tweets_pdw' );
+			$posts = $memcache->get( 'latest' );
+			$githubEvents = $memcache->get( 'github' );
+			$recent = $memcache->get( 'flickr' );
+			$books = $memcache->get( 'goodreads' );
+			$instaData = $memcache->get( 'instagram' );
+			$tweets = $memcache->get( 'tweets' );
+
+			// Pull our winner
+			$latest = key( $posts );
+			$latestDate = gmdate( "M d Y", $posts[$latest] );
 
 		}
 
 	}
 
-        if (( $location = 'local' ) OR 
+        if (( $location == 'local' ) OR 
         	( !$posts = $memcache->get( 'latest_pdw' ))) {
 
 		//$seti = new RPC;
@@ -84,12 +89,13 @@
 
 		if( $location != 'local' ) {
 
-			$memcache->set( 'latest_pdw', $latest, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'hub_pdw', $githubEvents, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'flickr_pdw', $recent, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'reads_pdw', $books, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'insta_pdw', $instaData, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'tweets_pdw', $tweets, MEMCACHE_COMPRESSED, 3600 );
+			$memcache->set( 'latest', $latest );
+			$memcache->set( 'github', $githubEvents );
+			$memcache->set( 'flickr_recent', $recent );
+			$memcache->set( 'flickr_info', $info );
+//			$memcache->set( 'goodreads', $books, MEMCACHE_COMPRESSED, 3600 );
+			$memcache->set( 'instagram', $instaObj );
+			$memcache->set( 'twitter', $tweets );
 			
 		}
 
