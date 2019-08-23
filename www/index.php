@@ -86,8 +86,7 @@
 					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> <ul> <li> Currently reading 
 	");
 
-	$book = $books[0];	
-	$template->outputHTML( "<a href='" .$book->link. "' alt='" .$book->title. "'> " .$book->title. " </a>");
+	$template->outputHTML( "<a href='" .$book['link']. "' alt='" .$book['title']. "'> " .$book['title']. " </a>");
 	$template->outputHTML("
 					</li></ul>
 					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
