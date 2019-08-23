@@ -87,7 +87,7 @@
 	$tweet = $tweets[0];
 	$posts['twitter'] = strtotime( $tweet->created_at );
 	$feed['twitter'] = $tweets;
-		
+
 	// Sort Array of Unix Timestamps
 	arsort( $posts );
 

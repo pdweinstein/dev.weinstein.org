@@ -92,7 +92,7 @@
 					</li></ul>
 					<li><a href=\"https://www.facebook.com/pdweinstein\" alt\"Facebook\">Facebook</a></li>
 	");
-
+/*
 	$postData = "";
 	$userPosts = $fb->get("/526081044/feed", $accessToken);
 	$postBody = $userPosts->getDecodedBody();
@@ -110,7 +110,7 @@ echo $postData[$k]["message"];
     			}
 		}
 	}
-
+*/
 	$template->outputHTML("
 					<li><a href=\"https://www.flickr.com/photos/pdweinstein\" alt\"Flickr\">Flickr</a><ul><li>
 	");
@@ -156,7 +156,13 @@ echo $postData[$k]["message"];
 				$(this).css({left:'20%'});
 			}
 		});
-	</script>";
+	</script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '" .$gAnalyticsID. "');
+    </script>";
 	$template->outputHTML( "</body></html>" );
 
 ?>
