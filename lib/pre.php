@@ -97,8 +97,8 @@
 	// Reset our pointer to the top of the array
 	reset( $posts );
 
-        if (( $location == 'local' ) OR 
-        	( !$latest = $memcache->get( 'latest' ))) {
+    if ( $location != 'local' ) { 
+        if ( !$latest = $memcache->get( 'latest' )) {
 
 		// Pull our winner
 		$latest = key( $posts );
@@ -108,6 +108,8 @@
 		$memcache->set( 'latest_date', $latestDate, MEMCACHE_COMPRESSED, 3600 );
 		$memcache->set( 'latest_post', $post, MEMCACHE_COMPRESSED, 3600 );
 
-	}
+        } 
+
+    }
 
 ?>
