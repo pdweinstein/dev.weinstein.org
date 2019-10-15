@@ -159,9 +159,10 @@ class template {
 		$tweet = preg_replace( '/((http|https):\/\/[^\s]+)/', '<a href="$0">$0</a>', $feed[0]->full_text );
 		$this->outputHTMl( "<p>" .preg_replace( '/@([^\s]+)/', '<a href="http://twitter.com/$1">$0</a>', $tweet ). "</p>" );
 
-		if(( !empty( $feed[0]->media->media_url_https )) AND ( $type == 'main' )) {
+        // To Do: Tweets can have more than 1 media item!
+		if(( !empty( $feed[0]->entities->media[0]->media_url_https )) AND ( $type == 'main' )) {
 
-			$this->outputHTML( "<p><img src=\"" .$feed[0]->media->media_url_https. "\" alt=\"\"></p>" );
+			$this->outputHTML( "<p><img src=\"" .$feed[0]->entities->media[0]->media_url_https. "\" alt=\"\"></p>" );
 
 		}
 	
