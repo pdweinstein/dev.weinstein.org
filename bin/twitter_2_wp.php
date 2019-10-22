@@ -48,25 +48,29 @@
             for( $counter = 0; $counter < 100; $counter++ ){
 
                 $totalCount = ( $counter + 1 ) + ( $masterCount * 100 );
-
+/*
                 if (( $masterCount > 0 ) && $counter == 0 ) {
 
                     // Skip repeat of last/first
                     $counter++;
 
                 }
-
-                // TO DO: Update to refect same process as with cache!
+*/
+                // Same process as with cache!
                 processTweet( $tweets[$counter] );
+                array_push( $posts, $post );
 
                 if( $counter <= 99 ) {
 
                     $endWith = $tweets[$counter]->id;
 
                 }
+
             }
 
         }
+
+        validate( $posts );
 
     } else {
 
@@ -93,14 +97,27 @@
     function validate( $posts ) {
 
         // TO DO: Review and commit to creating WP post or skip
-        // Post title: mon dd yy - like old posts
-        // TO DO: Compare current & previous ids, is this a duplicate?
-
         for( $counter = 0; $counter <= sizeof( $posts ); $counter ++ ) {
 
-            $post = $posts[$counter];
-            $key = key( $post );
-            print( $post[$key] ); 
+            // If multiple tweets on same day, include in one WP post
+            // with multiple links to orginal tweet on Twitter
+            while( date( "Y-m-d", strtotime( $posts[$counter]['date'] )) == date( "Y-m-d", strtotime( $posts[$counter+1]['date'] ))) {
+
+                print( $posts[$counter]['post'] ); 
+                print( $posts[$counter+1]['post'] ); 
+                $counter = $counter + 1;
+                $multi = true;
+
+            }
+
+            if( !$multi ) {
+
+                print( $posts[$counter]['post'] ); 
+
+            }
+
+            $multi = false;
+
             print( 'Type "y" to continue: ' );
             $handle = fopen ( 'php://stdin', 'r' );
             $line = fgets( $handle );
@@ -112,9 +129,9 @@
 
             fclose( $handle );
 
-            if( !empty($posts[$counter + 1])) {
+            if( !empty($posts[$counter+1])) {
 
-                if ( !array_diff_key( $posts[$counter], $posts[$counter+1] )) {
+                if ( $post['id'] == $posts[$counter+1]['id'] ) {
 
                     # Duplicates, skip next tweet
                     $counter++;
@@ -129,16 +146,29 @@
 
     function processTweet( $tweetObj ) {
 
-        // If multiple tweets on same day, include in one WP post? 
-        // With multiple links to orginal tweet on Twitter?
-        // Include other entities, such as link headline/previews?
-        // If retweet, include orginal message in full
-        // If reply/conversation?
-        // TO DO: Print Geo info, if tagged
+        // Include other entities, such as link title/desc from URL Object?
+        // If reply/conversation? in_reply_to_status
+        // TO DO: Print Geo info, coordinates
+//        var_dump( $tweetObj );
+
         // Better format for date than Twitters
+        // Post title: mon dd yy - like old posts
+        $tDate = $tweetObj->created_at;
+        $localTimeStamp = date( "Y-m-d h:i:s", strtotime( $tDate ));
+        $wpPostDate = date( "M d y", strtotime( $tDate ));
+        $humanDate = date( "d F Y", strtotime( $tDate ));
+
         $tweet = preg_replace( '/((http|https):\/\/[^\s]+)/', '<a href="$0">$0</a>', $tweetObj->full_text );
-        $post = "<p align='right'>First published: <a href='https://twitter.com/pdweinstein/status/" .$tweetObj->id. "' rel='canonical'>" .$tweetObj->created_at. "</a> on <a href='https://www.twitter.com/pdweinstein/'>Twitter</a></p>";
+        $post = "<p align='right'>First published: <a href='https://twitter.com/pdweinstein/status/" .$tweetObj->id. "' rel='canonical'>" .$humanDate. "</a> on <a href='https://www.twitter.com/pdweinstein/'>Twitter</a></p>";
         $post .= "<p>" .preg_replace( '/@([^\s]+)/', '<a href="http://twitter.com/$1">$0</a>', $tweet ). "</p>\n";
+
+        // If retweet, include orginal message in full
+        if( !empty( $tweetObj->retweeted_status )) {
+        
+            $retweet = preg_replace( '/((http|https):\/\/[^\s]+)/', '<a href="$0">$0</a>', $tweetObj->retweeted_status->full_text );
+            $post .= "<p>Original Tweet: " .$retweet. "</p>\n";
+
+        }
 
         if( !empty( $tweetObj->entities->media )) {
 
@@ -155,7 +185,7 @@
 
         }
 
-        $posts[$tweetObj->id] = $post;
+        $posts = array( date => $localTimeStamp, id => $tweetObj->id, post => $post );
         return $posts;
 
     }
