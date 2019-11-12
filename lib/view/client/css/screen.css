@@ -1,11 +1,11 @@
 @font-face {
 	font-family: 'PRNumber';
-  	src: url( '../ttf/PRNumber3.ttf' );
+  	src: url( 'https://storage.cloud.google.com/personal-dev-site.appspot.com/view/client/ttf/PRNumber3.ttf' );
 }
 
 @font-face {
 	font-family: 'PrintChar';
-  	src: url( '../ttf/PrintChar21.ttf' );
+  	src: url( 'https://storage.cloud.google.com/personal-dev-site.appspot.com/view/client/ttf/PrintChar21.ttf' );
 }
 
 body {

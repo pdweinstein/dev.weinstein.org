@@ -35,8 +35,8 @@
 
 	$template->outputHTML("
     <div class=\"desktop\">
-        <div class=\"icon\"><a href=\"https://www.weinstein.org/\"><img src='https://storage.cloud.google.com/personal-dev-site.appspot.com/view/client/png//mac.png' alt='Home'></a></div>
-        <div class\"iconText\"><a href=\"https://www.weinstein.org/\">Home</div></a>
+        <div class=\"icon\"><a href=\"https://www.weinstein.org/\"><img src='https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/png/hd.png' alt='Home'></a></div>
+        <div class=\"iconText\"><a href=\"https://www.weinstein.org/\">Home</div></a>
     </div>
     <div class=\"window\">
 		<div class=\"bar title\">
