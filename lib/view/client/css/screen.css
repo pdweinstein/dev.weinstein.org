@@ -21,6 +21,33 @@ nav {
 	font-family: PrintChar !important;
 }
 
+.desktop {
+
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 30px;
+
+}
+
+.icon {
+
+    position: relative;
+    right: -3px;
+
+}
+
+.iconText {
+
+    text-decoration: none;
+    text-align: center;
+    color: black;
+    background-color: white;
+    margin: auto;
+     
+}
+
+
 .blink {
     animation-duration: 1s;
     animation-name: blink;
