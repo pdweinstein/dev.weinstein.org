@@ -9,12 +9,14 @@
 }
 
 body {
-	padding-top: 20px;
+
+    padding-top: 20px;
 	padding-bottom: 20px;
 	font-family: PRNumber !important;
 	padding: 0px 0px 0px 0px;
 	color:#000000;
   	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAH0lEQVQIW2NkYGD4D8SMQAwGMAZcEC4DU4ksANLxHwCC4QQE/R3QmAAAAABJRU5ErkJggg==) repeat;
+
 }
 
 nav {
@@ -26,14 +28,23 @@ nav {
     position: absolute;
     top: 25px;
     right: 25px;
-    width: 30px;
+    width: 36px;
+
+}
+
+.finder{
+
+    position: relative;
+    top: 10px;
+    right: -10px;
+    width: 500px;
 
 }
 
 .icon {
 
     position: relative;
-    right: -3px;
+    right: -6px;
 
 }
 
@@ -41,10 +52,12 @@ nav {
 
     text-decoration: none;
     text-align: center;
+    font-size: 12px;
     color: black;
     background-color: white;
     margin: auto;
-     
+    padding: 0px 0px 0px 0px;
+
 }
 
 
@@ -84,6 +97,7 @@ nav {
 }
 
 .window {
+
   display: -webkit-box;
   display: -moz-box;
   display: box;
@@ -103,12 +117,16 @@ nav {
           box-shadow: 4px 4px 0 black;
   height: 80vh;
   margin: 5% auto;
-  min-height: 21.875em;
+/*  min-height: 21.875em; */
   overflow: hidden;
-  position: relative;
+  position: absolute;
   float: none;
   width: 90vw;
+  top: 0px;
+  right: 250px;
+
 }
+
 @media screen and (min-width: 400px) {
   .window {
     height: 75vh;
@@ -207,6 +225,7 @@ nav {
   opacity: 1.0;
 }
 .window .bar .maximize {
+
   height: 14px;
   width: 14px;
   background: white;
@@ -216,7 +235,9 @@ nav {
   right: 2%;
   top: 7px;
   z-index: 2;
+
 }
+
 .window .bar .maximize:after {
   height: 8px;
   width: 8px;
@@ -225,4 +246,15 @@ nav {
   left: -2px;
   position: absolute;
   top: -2px;
+
+}
+
+.ad {
+
+    z-index: 3;
+    height: 200px;
+    width: 550px;
+    top: 50px;
+    right: 100px;
+
 }

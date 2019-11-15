@@ -35,8 +35,77 @@
 
 	$template->outputHTML("
     <div class=\"desktop\">
-        <div class=\"icon\"><a href=\"https://www.weinstein.org/\"><img src='https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/png/hd.png' alt='Home'></a></div>
+        <div class=\"icon\"><a href=\"https://www.weinstein.org/\"><img src='https://storage.cloud.google.com/personal-dev-site.appspot.com/view/client/png/hd.png' alt='Home'></a></div>
         <div class=\"iconText\"><a href=\"https://www.weinstein.org/\">Home</div></a>
+        <br/>
+        <div class=\"icon\"><a href=\"#\"><img src='https://storage.cloud.google.com/personal-dev-site.appspot.com/view/client/png/floppy.png' alt='AfterDark'></a></div>
+        <div class=\"iconText\"><a href=\"#\">After Dark</div></a>
+    </div>
+    <div class=\"window ad\">
+        <div class=\"bar title\">
+            <h1>After Dark</h1>
+            <nav>
+                <ul>
+                    <li class=\"close adc\"></li>
+                </ul>
+            </nav>
+        </div>
+        <div>
+           <div class=\"finder\">
+               <div class=\"row\">
+                   <div class=\"col-sm-4 col-md-2\" >
+                       <div class=\"icon afIcon\"><a href=\"after-dark/bouncing-ball.html\"><img src='../lib/view/client/png/app.png' alt='Bouncing Ball'></a></div>
+                       <div class=\"iconText afIcon\"><a href=\"after-dark/bouncing-ball.html\">Bouncing Ball</div></a>
+                   </div>
+                   <div class=\"col-sm-4 col-md-2 col-md-push-2\" >
+                         <div class=\"icon afIcon\"><a href=\"after-dark/fade-out.html\"><img src='../lib/view/client/png/app.png' alt='Fade Out'></a></div>
+                         <div class=\"iconText afIcon\"><a href=\"after-dark/fade-out.html\">Fade Out</div></a>
+                   </div>
+                   <div class=\"col-sm-4 col-md-2 col-md-push-6\" >
+                         <div class=\"icon afIcon\"><a href=\"after-dark/fish.html\"><img src='../lib/view/client/png/app.png' alt='Fish'></a></div>
+                         <div class=\"iconText afIcon\"><a href=\"after-dark/fish.html\">Fish</div></a>
+                   </div>
+                   <div class=\"col-sm-4 col-md-2 col-m d-pull-4\" >
+                         <div class=\"icon afIcon\"><a href=\"after-dark/flying-toasters.html\"><img src='../lib/vi    ew/client/png/app.png' alt='Flying Toaster'></a></div>
+                         <div class=\"iconText afIcon\"><a href=\"after-dark/flying-toasters.html\">Flying Toasters</div></a>
+                   </div>
+                   <div class=\"col-sm-4 col-md-2 col-md-pull-4\" >
+                         <div class=\"icon afIcon\"><a href=\"after-dark/globe.html\"><img src='../lib/view/client/png/app.png' alt='Globe'></a></div>
+                         <div class=\"iconText afIcon\"><a href=\"after-dark/globe.html\">Globe</div></a>
+                   </div>
+                   <div class=\"col-sm-4 col-md-2\" >
+                         <div class=\"icon afIcon\"><a href=\"after-dark/hard-rain.html\"><img src='../lib/view/cli    ent/png/app.png' alt='Hard Rain'></a></div>
+                         <div class=\"iconText afIcon\"><a href=\"after-dark/hard-rain.html\">Hard Rain</div></a>
+                   </div>
+               </div>
+               <div class=\"row\">
+                    <div class=\"col-sm-4 col-md-2\" >
+                        <div class=\"icon afIcon\"><a href=\"after-dark/rainstorm.html\"><img src='../lib/view/client/png/app.png' alt='Rainstorm'></a></div>
+                        <div class=\"iconText afIcon\"><a href=\"after-dark/rainstorm.html\">Rainstorm</div></a>
+                    </div>
+                    <div class=\"col-sm-4 col-md-2 col-md-push-2\" >
+                       <div class=\"icon afIcon\"><a href=\"after-dark/spotlight.html\"><img src='../lib/view/client/png/app.png' alt='Spotlight'></a></div>
+                        <div class=\"iconText afIcon\"><a href=\"after-dark/spotlight.html\">Spotlight</div></a>
+                    </div>
+                    <div class=\"col-sm-4 col-md-2 col-md-push-6\" >
+                        <div class=\"icon afIcon\"><a href=\"after-dark/logo.html\"><img src='../lib/view/client/png/app.png' alt='Logo'></a></div>
+                        <div class=\"iconText afIcon\"><a href=\"after-dark/logo.html\">Logo</div></a>
+                    </div>
+                    <div class=\"col-sm-4 col-md-2 col-md-pull-4\" >
+                        <div class=\"icon afIcon\"><a href=\"after-dark/messages.html\"><img src='../lib/view/client/png/app.png' alt='Messages'></a></div>
+                        <div class=\"iconText afIcon\"><a href=\"after-dark/messages.html\">Messages</div></a>
+                    </div>
+                    <div class=\"col-sm-4 col-md-2 col-md-pull-4\" >
+                        <div class=\"icon afIcon\"><a href=\"after-dark/messages2.html\"><img src='../lib/view/client/png/app.png' alt='Messages 2'></a></div>
+                        <div class=\"iconText afIcon\"><a href=\"after-dark/messages2.html\">Messages 2</div></a>
+                    </div>
+                    <div class=\"col-sm-4 col-md-2\" >
+                        <div class=\"icon afIcon\"><a href=\"after-dark/warp.html\"><img src='../lib/view/client/png/app.png' alt='Warp'></a></div>
+                        <div class=\"iconText afIcon\"><a href=\"after-dark/Warp.html\">Warp</div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class=\"window\">
 		<div class=\"bar title\">
@@ -153,13 +222,19 @@ echo $postData[$k]["message"];
 	// page load
 	$template->outputJS( $template->js );
 	// Local JS code
-	echo "<script> 
-		$(\".window\").draggable().resizable({
-			resize: function(event, ui) {
-				$(this).css({left:'20%'});
-			}
-		});
-	</script>
+	echo "
+    <script> 
+        $( \".window\" ).draggable();
+        $( \".ad\" ).hide();
+        $( \".adIcon\" ).click(function( event ) {
+            event.preventDefault();
+            $( \".ad\" ).show( \"scale\", { percent: 0 }, 500 );
+        });
+        $( \".adc\" ).click(function( event ) {
+            event.preventDefault();
+            $( \".ad\" ).hide( \"scale\", { percent: 0 }, 500 );
+        });
+    </script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
