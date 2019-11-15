@@ -43,7 +43,7 @@ class template {
 	); 
 	var $js = array( 
 		0 => array( "type" => "text/javascript", "src" => "https://storage.googleapis.com/personal-dev-site.appspot.com/controller/client/js/jquery-3.3.1.min.js" ),
-		1 => array( "type" => "text/javascript", "src" => "https://storage.googleapis..com/personal-dev-site.appspot.com/controller/client/js/bootstrap.min.js" ),
+		1 => array( "type" => "text/javascript", "src" => "https://storage.googleapis.com/personal-dev-site.appspot.com/controller/client/js/bootstrap.min.js" ),
 		2 => array( "type" => "text/javascript", "src" => "https://storage.googleapis.com/personal-dev-site.appspot.com/controller/client/js/jquery-ui.min.js" ),
 		3 => array( "type" => "text/javascript", "src" => "https://www.googletagmanager.com/gtag/js" )
         );
