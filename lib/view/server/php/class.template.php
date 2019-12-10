@@ -37,24 +37,24 @@ class template {
 		5 => array( "property" => "og:type", "content" => "profile" ),
 		6 => array( "property" => "og:title", "content" => "www.weinstein.org" ),
 		7 => array( "property" => "og:url", "content" => "https://www.weinstein.org/" ),
-		8 => array( "property" => "og:image", "content" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/png/thumbnail.png" ),
+		8 => array( "property" => "og:image", "content" => "/media/png/thumbnail.png" ),
 		9 => array( "property" => "profile:first_name", "content" => "Paul" ),
 		10 => array( "property" => "profile:last_name", "content" => "Weinstein" )
 	); 
 	var $js = array( 
-		0 => array( "type" => "text/javascript", "src" => "https://storage.googleapis.com/personal-dev-site.appspot.com/controller/client/js/jquery-3.3.1.min.js" ),
-		1 => array( "type" => "text/javascript", "src" => "https://storage.googleapis.com/personal-dev-site.appspot.com/controller/client/js/bootstrap.min.js" ),
-		2 => array( "type" => "text/javascript", "src" => "https://storage.googleapis.com/personal-dev-site.appspot.com/controller/client/js/jquery-ui.min.js" ),
+		0 => array( "type" => "text/javascript", "src" => "/js/jquery-3.3.1.min.js" ),
+		1 => array( "type" => "text/javascript", "src" => "/js/bootstrap.min.js" ),
+		2 => array( "type" => "text/javascript", "src" => "/js/jquery-ui.min.js" ),
 		3 => array( "type" => "text/javascript", "src" => "https://www.googletagmanager.com/gtag/js" )
         );
 
 	var $link = array(
-		0 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/css/bootstrap.css", "media" => "screen" ),
-		1 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/css/screen.css", "media" => "screen" ),
-		2 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/css/jquery-ui.css", "media" => "screen" ),
+		0 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "/media/css/bootstrap.css", "media" => "screen" ),
+		1 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "/media/css/screen.css", "media" => "screen" ),
+		2 => array( "rel" => "stylesheet", "type" => "text/css", "href" => "/media/css/jquery-ui.css", "media" => "screen" ),
 		3 => array( "rel" => "alternate", "type" => "application/atom+xml", "href" => "http://feeds.feedburner.com/pdweinstein?format=xml" ),
-		4 => array( "rel" => "shortcut icon", "type" => "image/x-icon", "href" => "https://storage.googlapise.com/personal-dev-site.appspot.com/view/client/ico/favicon.ico" ),
-		5 => array( "rel" => "icon", "type" => "image/x-icon", "href" => "https://storage.googleapis.com/personal-dev-site.appspot.com/view/client/ico/favicon.ico" )
+		4 => array( "rel" => "shortcut icon", "type" => "image/x-icon", "href" => "/media/ico/favicon.ico" ),
+		5 => array( "rel" => "icon", "type" => "image/x-icon", "href" => "/media/ico/favicon.ico" )
 	);
 	
 	/**
@@ -162,7 +162,7 @@ class template {
         // To Do: Tweets can have more than 1 media item!
 		if(( !empty( $feed[0]->entities->media[0]->media_url_https )) AND ( $type == 'main' )) {
 
-			$this->outputHTML( "<p><img src=\"" .$feed[0]->entities->media[0]->media_url_https. "\" alt=\"\"></p>" );
+			$this->outputHTML( "<p><img src=\"" .$feed[0]->entities->media[0]->media_url_https. "\" alt=\"\" class=\"img-thumbnail\"></p>" );
 
 		}
 	
