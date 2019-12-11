@@ -12,22 +12,21 @@
                 $memcache = new Memcache;
 		$memcache->addServer( $mhost, $mport );
 
-        	if ( $posts = $memcache->get( 'latest' )) {
+        	if ( $latest = $memcache->get( 'latest' )) {
 
-			$posts = $memcache->get( 'latest' );
 			$githubEvents = $memcache->get( 'github' );
 			$recent = $memcache->get( 'flickr_recent' );
 			$info = $memcache->get( 'flickr_info' );
-			$books = $memcache->get( 'goodreads' );
-			$instaData = $memcache->get( 'instagram' );
-			$tweets = $memcache->get( 'tweets' );
+			$book = $memcache->get( 'goodreads' );
+			$instaObj = $memcache->get( 'instagram' );
+			$tweets = $memcache->get( 'twitter' );
 
 		}
 
 	}
 
         if (( $location == 'local' ) OR 
-        	( !$posts = $memcache->get( 'latest' ))) {
+       		( !$latest = $memcache->get( 'latest' ))) {
 
 		//$seti = new RPC;
 
@@ -53,17 +52,8 @@
 		$instaObj = $elsewhere->getInstaPosts( $instaToken, 1 );
 		$tweets = json_decode( $twitter->setGetfield( $getfield )->buildOauth( $twitterURL, $requestMethod )->performRequest() );
 
-		if( $location != 'local' ) {
-
-			$memcache->set( 'latest', $latest, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'github', $githubEvents, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'flickr_recent', $recent, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'flickr_info', $info, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'goodreads', $books, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'instagram', $instaObj, MEMCACHE_COMPRESSED, 3600 );
-			$memcache->set( 'twitter', $tweets, MEMCACHE_COMPRESSED, 3600 );
-			
-		}
+	        $book['link'] = $books[0]->link;
+	        $book['title'] = $books[0]->title;
 
 	}
 
@@ -97,5 +87,17 @@
 	// Pull our winner
 	$latest = key( $posts );
 	$latestDate = gmdate( "M d Y", $posts[$latest] );
+
+	if( $location != 'local' ) {
+
+		$memcache->set( 'latest', $latest, MEMCACHE_COMPRESSED, 3600 );
+		$memcache->set( 'github', $githubEvents, MEMCACHE_COMPRESSED, 3600 );
+		$memcache->set( 'flickr_recent', $recent, MEMCACHE_COMPRESSED, 3600 );
+		$memcache->set( 'flickr_info', $info, MEMCACHE_COMPRESSED, 3600 );
+		$memcache->set( 'goodreads', $book, MEMCACHE_COMPRESSED, 3600 );
+		$memcache->set( 'instagram', $instaObj, MEMCACHE_COMPRESSED, 3600 );
+		$memcache->set( 'twitter', $tweets, MEMCACHE_COMPRESSED, 3600 );
+			
+	}
 
 ?>
