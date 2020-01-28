@@ -26,6 +26,7 @@
 *.sql
 *.sqlite
 *.xml
+*.json
 
 # OS generated files #
 ######################
@@ -37,7 +38,7 @@
 ehthumbs.db
 Thumbs.db
 
-# COnfig files #
+# Config files #
 ###############
 app.yaml
 config.php
