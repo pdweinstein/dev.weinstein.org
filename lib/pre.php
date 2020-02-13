@@ -90,13 +90,13 @@
 
 	if( $location != 'local' ) {
 
-		$memcache->set( 'latest', $latest, MEMCACHE_COMPRESSED, 3600 );
-		$memcache->set( 'github', $githubEvents, MEMCACHE_COMPRESSED, 3600 );
-		$memcache->set( 'flickr_recent', $recent, MEMCACHE_COMPRESSED, 3600 );
-		$memcache->set( 'flickr_info', $info, MEMCACHE_COMPRESSED, 3600 );
-		$memcache->set( 'goodreads', $book, MEMCACHE_COMPRESSED, 3600 );
-		$memcache->set( 'instagram', $instaObj, MEMCACHE_COMPRESSED, 3600 );
-		$memcache->set( 'twitter', $tweets, MEMCACHE_COMPRESSED, 3600 );
+		$memcache->set( 'latest', $latest, MEMCACHE_COMPRESSED, 900 );
+		$memcache->set( 'github', $githubEvents, MEMCACHE_COMPRESSED, 900 );
+		$memcache->set( 'flickr_recent', $recent, MEMCACHE_COMPRESSED, 900 );
+		$memcache->set( 'flickr_info', $info, MEMCACHE_COMPRESSED, 900 );
+		$memcache->set( 'goodreads', $book, MEMCACHE_COMPRESSED, 900 );
+		$memcache->set( 'instagram', $instaObj, MEMCACHE_COMPRESSED, 900 );
+		$memcache->set( 'twitter', $tweets, MEMCACHE_COMPRESSED, 900 );
 			
 	}
 
