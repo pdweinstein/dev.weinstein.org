@@ -3,6 +3,7 @@
 <?php
 
   // Script to get a URL/IP and check HTTP Status
+  // Usage: ./checkSite.php https://www.example.org webmaster@example.org
 
   // Config Run Enviroment
   error_reporting( 1 );
@@ -38,6 +39,9 @@
     $url = $argv[1];
     $email = $argv[2];
 
+    //echo "Here is: " .$url. "\n";
+    //echo "Here is: " .$email. "\n";
+
   }
 
   // Should also be validading email arg!
@@ -57,6 +61,8 @@
     $output = curl_exec( $ch );
     $httpcode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
     curl_close( $ch );
+
+    //echo "Host " .$url. " response is: " .$httpcode. "\n";
 
     if (( $httpcode == 0 ) OR ( $httpcode >= 400 )) {
 
