@@ -20,6 +20,7 @@
 			$book = $memcache->get( 'goodreads' );
 			$instaObj = $memcache->get( 'instagram' );
 			$tweets = $memcache->get( 'twitter' );
+			$bPost = $memcache->get( 'blog' );
 
 		}
 
@@ -45,17 +46,25 @@
 		]);
 
 		// Get our latest results
-       		$books = $goodReads->getShelf();
-		$githubEvents = $elsewhere->getGitHubEvents();
-		$recent = $flickr->people_getPublicPhotos( FLICKR_USER );
-		$info = $flickr->photos_getInfo( $recent['photos']['photo'][0]['id'] );
-		$instaObj = $elsewhere->getInstaPosts( $instaToken, 1 );
-		$tweets = json_decode( $twitter->setGetfield( $getfield )->buildOauth( $twitterURL, $requestMethod )->performRequest() );
+       	$books = $goodReads->getShelf();
+	    $book['link'] = $books[0]->link;
+	    $book['title'] = $books[0]->title;
 
-	        $book['link'] = $books[0]->link;
-	        $book['title'] = $books[0]->title;
+        $githubEvents = $elsewhere->getGitHubEvents();
 
-	}
+        $recent = $flickr->people_getPublicPhotos( FLICKR_USER );
+        $info = $flickr->photos_getInfo( $recent['photos']['photo'][0]['id'] );
+
+        $instaObj = $elsewhere->getInstaPosts( $instaToken, 1 );
+
+        $tweets = json_decode( $twitter->setGetfield( $getfield )->buildOauth( $twitterURL, $requestMethod )->performRequest() );
+
+        $blog = simplexml_load_file( $rss );
+        $bPost = $blog->entry;
+//        var_dump( $blog->entry );
+//        exit;
+
+    }
 
 	// GitHub Last Post	
 	$GHrecent = $githubEvents[0];
@@ -78,7 +87,11 @@
 	$posts['twitter'] = strtotime( $tweet->created_at );
 	$feed['twitter'] = $tweets;
 
-	// Sort Array of Unix Timestamps
+    // Last Blog Post
+    $posts['blog'] = $bPost->published;
+    $feed['blog'] = $bPost;
+
+    // Sort Array of Unix Timestamps
 	arsort( $posts );
 
 	// Reset our pointer to the top of the array
@@ -97,6 +110,7 @@
 		$memcache->set( 'goodreads', $book, MEMCACHE_COMPRESSED, 900 );
 		$memcache->set( 'instagram', $instaObj, MEMCACHE_COMPRESSED, 900 );
 		$memcache->set( 'twitter', $tweets, MEMCACHE_COMPRESSED, 900 );
+		$memcache->set( 'blog', $bPost, MEMCACHE_COMPRESSED, 900 );
 			
 	}
 

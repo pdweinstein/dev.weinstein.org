@@ -189,6 +189,13 @@ class template {
 
 	}
 
+	public function outputblog( $feed ) {
+
+		$this->outputHTML( "<p><a href=\"" .$feed->link['href']. "\">" .(string) $feed->title. "</a></p>");
+		$this->outputHTML( "<p>" .( string) $feed->summary. "</p>" );
+
+	}
+
 }
 // Class Dismissed
 

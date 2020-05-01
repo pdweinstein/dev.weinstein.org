@@ -137,12 +137,16 @@
 
 		$template->outputInstagram( $feed['instagram'] );
 
-	}
+	} elseif( $latest == 'blog' ) {
 
-	$template->outputHTML("
+		$template->outputBlog( $feed['blog'] );
+
+}
+
+    $template->outputHTML("
 				<p>Elsewhere:</p>
 				<p><ul>
-					<li><a href=\"/blog/\" alt\"Personal Blog\">Blog</a><ul><li><a href=\"/blog/index.php/2018/05/what-is-old-is-new-again.html\">What is Old is New (Again)</a></li></ul></li>
+					<li><a href=\"/blog/\" alt\"Personal Blog\">Blog</a><ul><li><a href=\"" .$bPost->link['href']. "\">" .(string) $bPost->title. "</a></li></ul></li>
 <!---					<li><a href=\"\">Boinc<ul><li> --->
 	");
 	
