@@ -20,7 +20,6 @@
 			$book = $memcache->get( 'goodreads' );
 			$instaObj = $memcache->get( 'instagram' );
 			$tweets = $memcache->get( 'twitter' );
-			$bPost = $memcache->get( 'blog' );
 
 		}
 
@@ -59,10 +58,6 @@
 
         $tweets = json_decode( $twitter->setGetfield( $getfield )->buildOauth( $twitterURL, $requestMethod )->performRequest() );
 
-        $blog = simplexml_load_file( $rss );
-        $bPost = $blog->entry;
-//        var_dump( $blog->entry );
-//        exit;
 
     }
 
@@ -87,9 +82,11 @@
 	$posts['twitter'] = strtotime( $tweet->created_at );
 	$feed['twitter'] = $tweets;
 
-    // Last Blog Post
-    $posts['blog'] = $bPost->published;
-    $feed['blog'] = $bPost;
+    	// Last Blog Post
+        $blog = simplexml_load_file( $rss );
+        $bPost = $blog->entry;
+    	$posts['blog'] = $bPost->published;
+   	$feed['blog'] = $bPost;
 
     // Sort Array of Unix Timestamps
 	arsort( $posts );
@@ -110,8 +107,7 @@
 		$memcache->set( 'goodreads', $book, MEMCACHE_COMPRESSED, 900 );
 		$memcache->set( 'instagram', $instaObj, MEMCACHE_COMPRESSED, 900 );
 		$memcache->set( 'twitter', $tweets, MEMCACHE_COMPRESSED, 900 );
-		$memcache->set( 'blog', $bPost, MEMCACHE_COMPRESSED, 900 );
-			
+
 	}
 
 ?>
