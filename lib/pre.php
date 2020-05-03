@@ -85,7 +85,7 @@
     	// Last Blog Post
         $blog = simplexml_load_file( $rss );
         $bPost = $blog->entry;
-    	$posts['blog'] = $bPost->published;
+    	$posts['blog'] = strtotime( ( string ) $bPost->published );
    	$feed['blog'] = $bPost;
 
     // Sort Array of Unix Timestamps
