@@ -7,7 +7,9 @@
         use Facebook\Exceptions\FacebookResponseException;
         use Facebook\Exceptions\FacebookSDKException;
 
-        if ( $location != 'local' ) {
+        use EspressoDev\InstagramBasicDisplay\InstagramBasicDisplay;
+
+	if ( $location != 'local' ) {
 
                 $memcache = new Memcache;
 		$memcache->addServer( $mhost, $mport );
@@ -20,48 +22,60 @@
 			$book = $memcache->get( 'goodreads' );
 			$instaObj = $memcache->get( 'instagram' );
 			$tweets = $memcache->get( 'twitter' );
-
 		}
+
+		$instaToken = $memcache->get( 'igToken' );
 
 	}
 
         if (( $location == 'local' ) OR 
        		( !$latest = $memcache->get( 'latest' ))) {
 
-		//$seti = new RPC;
+            //$seti = new RPC;
 
-        	$goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
+            $goodReads = new goodReads( $goodreads_token, $goodreads_user_id, $goodreadsOptions, true);
 
-        	$twitter = new TwitterAPIExchange( $twitterSettings );
+            $twitter = new TwitterAPIExchange( $twitterSettings );
 
-        	$flickr = new phpFlickr( FLICKR_API );
+            $flickr = new phpFlickr( FLICKR_API );
 
-        	$elsewhere = new Outside;
+            $elsewhere = new Outside;
 
-		$fb = new Facebook([
+	    $fb = new Facebook([
 			'app_id' => $appId,
 			'app_secret' => $appSecret,
 			'default_graph_version' => 'v3.1'
-		]);
+	    ]);
 
-		// Get our latest results
-       	$books = $goodReads->getShelf();
-	    $book['link'] = $books[0]->link;
-	    $book['title'] = $books[0]->title;
+	    // Get our latest results
+       	    $books = $goodReads->getShelf();
+            $book['link'] = $books[0]->link;
+            $book['title'] = $books[0]->title;
 
-        $githubEvents = $elsewhere->getGitHubEvents();
+            $githubEvents = $elsewhere->getGitHubEvents();
 
-        $recent = $flickr->people_getPublicPhotos( FLICKR_USER );
-        $info = $flickr->photos_getInfo( $recent['photos']['photo'][0]['id'] );
+            $recent = $flickr->people_getPublicPhotos( FLICKR_USER );
+            $info = $flickr->photos_getInfo( $recent['photos']['photo'][0]['id'] );
 
-        $instaObj = $elsewhere->getInstaPosts( $instaToken, 1 );
+	    $tweets = json_decode( $twitter->setGetfield( $getfield )->buildOauth( $twitterURL, $requestMethod )->performRequest() );
 
-        $tweets = json_decode( $twitter->setGetfield( $getfield )->buildOauth( $twitterURL, $requestMethod )->performRequest() );
+            $insta = new InstagramBasicDisplay([
+	        'appId' =>  $instaID,
+                'appSecret' => $instaSecret,
+                'redirectUri' => $instaRedirectUri 
+            ]);
+            $insta->setAccessToken( $instaToken );
+            $instaObj = $insta->getUserMedia();
+            $instaToken = $insta->refreshToken( $instaToken, true );
 
+        }
 
-    }
+	// Instagram Last Post	
+	$instaData = $instaObj->{'data'};
+	$posts['instagram'] = strtotime( $instaData[0]->{'timestamp'});
+	$feed['instagram'] = $instaData[0];
 
-	// GitHub Last Post	
+        // GitHub Last Post	
 	$GHrecent = $githubEvents[0];
 	$posts['github'] = strtotime( $GHrecent->created_at );
 	$feed['github'] = $GHrecent;
@@ -71,11 +85,6 @@
 	$feed['flickr'] = $info;
 
 	// Goodreads. No date for post (start/end reading dates)
-
-	// Instagram Last Post	
-	$instaData = $instaObj->{'data'};
-	$posts['instagram'] = $instaData[0]->{'created_time'};
-	$feed['instagram'] = $instaData;
 
 	// Twitter Last Post
 	$tweet = $tweets[0];
@@ -106,6 +115,7 @@
 		$memcache->set( 'flickr_info', $info, MEMCACHE_COMPRESSED, 900 );
 		$memcache->set( 'goodreads', $book, MEMCACHE_COMPRESSED, 900 );
 		$memcache->set( 'instagram', $instaObj, MEMCACHE_COMPRESSED, 900 );
+                $memcache->set( 'igToken', $instaToken, MEMCACHE_COMPRESSED, 2592000  );
 		$memcache->set( 'twitter', $tweets, MEMCACHE_COMPRESSED, 900 );
 
 	}

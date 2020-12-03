@@ -198,7 +198,7 @@ echo $postData[$k]["message"];
 					<li><a href=\"https://www.instagram.com/pdweinstein\" alt\"Instagram\">Instagram</a><ul><li>
 	");
 
-	$template->outputHTML( "<a href='" .$instaData[0]->{'link'}. "' alt='" .$instaData[0]->{'caption'}->{'text'}. "'>" .$instaData[0]->{'caption'}->{'text'}. "</a>" );
+	$template->outputHTML( "<a href='" .$instaData[0]->{'permalink'}. "' alt='" .$instaData[0]->{'caption'}. "'>" .$instaData[0]->{'caption'}. "</a>" );
  
 	$template->outputHTML("
 					</li></ul>					

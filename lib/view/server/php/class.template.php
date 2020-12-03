@@ -184,8 +184,12 @@ class template {
 
 	public function outputInstagram( $feed ) {
 
-		$this->outputHTML( "<p><img src=\"" .$feed[0]->images->standard_resolution->url. "\" alt=\"" .$feed[0]->caption->text. "\"></p>" );
-		$this->outputHTML( "<p>" .$feed[0]->caption->text. "</p>" );
+		list( $width, $height, $type, $attr ) = getimagesize( $feed->media_url );
+		$width = $width * .5 ;
+		$height = $height * .5 ;
+
+		$this->outputHTML( "<p><img src=\"" .$feed->media_url. "\" alt=\"" .$feed->caption. " height=\"" .height. "\" width=\"" .$width. "\" \"></p>" );
+		$this->outputHTML( "<p>" .$feed->caption. "</p>" );
 
 	}
 

@@ -11,5 +11,7 @@
 	include_once( '../lib/model/server/php/php-graph-sdk-5.x/src/Facebook/Exceptions/FacebookResponseException.php' );
 	include_once( '../lib/model/server/php/php-graph-sdk-5.x/src/Facebook/Exceptions/FacebookSDKException.php' );
 	include_once( '../lib/model/server/php/php-graph-sdk-5.x/src/Facebook/Helpers/FacebookRedirectLoginHelper.php' );
+        include_once('../lib/model/server/php/InstagramBasicDisplay.php');
+        include_once('../lib/model/server/php/InstagramBasicDisplayException.php');
 
 ?>
