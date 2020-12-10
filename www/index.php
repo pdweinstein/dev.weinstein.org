@@ -135,7 +135,7 @@
 
 	} elseif( $latest == 'instagram' ) {
 
-		$template->outputInstagram( $feed['instagram'] );
+		$template->outputInstagram( $feed['instagram'], 'main' );
 
 	} elseif( $latest == 'blog' ) {
 
@@ -148,18 +148,14 @@
 				<p><ul>
 					<li><a href=\"/blog/\" alt\"Personal Blog\">Blog</a><ul><li><a href=\"" .$bPost->link['href']. "\">" .(string) $bPost->title. "</a></li></ul></li>
 <!---					<li><a href=\"\">Boinc<ul><li> --->
-	");
-	
-	//echo $seti->getResults();
-	
-	$template->outputHTML("	
-					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a><ul><li>Last commit was
-	");					
+	");		
 
+	$template->outputHTML("
+					<li><a href=\"https://www.github.com/pdweinstein\" alt\"GitHub\">GitHub</a>
+	");
 	$template->outputGithub( $feed['github'], 'list' );	
 					
-	$template->outputHTML("
-					</li></ul>					
+	$template->outputHTML("					
 					<li><a href=\"https://www.goodreads.com/author/show/193451.Paul_Weinstein\" alt\"Goodreads\">Goodreads</a> <ul> <li> Currently reading 
 	");
 
@@ -195,13 +191,11 @@ echo $postData[$k]["message"];
 
 	$template->outputHTML("
 					</li></ul>
-					<li><a href=\"https://www.instagram.com/pdweinstein\" alt\"Instagram\">Instagram</a><ul><li>
+					<li><a href=\"https://www.instagram.com/pdweinstein\" alt\"Instagram\">Instagram</a>
 	");
+	$template->outputInstagram( $feed['instagram'], 'list' );
 
-	$template->outputHTML( "<a href='" .$instaData[0]->{'permalink'}. "' alt='" .$instaData[0]->{'caption'}. "'>" .$instaData[0]->{'caption'}. "</a>" );
- 
-	$template->outputHTML("
-					</li></ul>					
+	$template->outputHTML("				
 					<li><a href=\"https://www.linkedin.com/in/pdweinstein\" alt\"LinkedIn\">LinkedIn</a></li>
 					<li><a href=\"https://www.reddit.com/user/pdweinstein\" alt\"Reddit\">Reddit</a></li>
 				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a><ul><li>

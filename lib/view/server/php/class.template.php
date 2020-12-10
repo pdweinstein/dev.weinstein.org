@@ -176,20 +176,36 @@ class template {
 	
 		} elseif ( $type == 'list' ) {
 
-        		$this->outputHTML( "<a href=\"https://www.github.com/" .$feed->repo->name. "/commit/" .$feed->payload->commits[0]->sha. "\">" .substr( $feed->payload->commits[0]->sha, 0, 6 ). "</a> to repository <a href=\"https://www.github.com/" .$feed->repo->name. "\">" .$feed->repo->name. "</a>" );
+			if( !empty( $feed->repo->name )) {
+
+        		$this->outputHTML( "<ul><li>Last commit was <a href=\"https://www.github.com/" .$feed->repo->name. "/commit/" .$feed->payload->commits[0]->sha. "\">" .substr( $feed->payload->commits[0]->sha, 0, 6 ). "</a> to repository <a href=\"https://www.github.com/" .$feed->repo->name. "\">" .$feed->repo->name. "</a></li></ul>" );
+
+			}
 
 		}
 
 	}
 
-	public function outputInstagram( $feed ) {
+	public function outputInstagram( $feed, $type ) {
 
-		list( $width, $height, $type, $attr ) = getimagesize( $feed->media_url );
-		$width = $width * .5 ;
-		$height = $height * .5 ;
+		if( $type == 'main' ) { 
 
-		$this->outputHTML( "<p><img src=\"" .$feed->media_url. "\" alt=\"" .$feed->caption. " height=\"" .height. "\" width=\"" .$width. "\" \"></p>" );
-		$this->outputHTML( "<p>" .$feed->caption. "</p>" );
+			list( $width, $height, $type, $attr ) = getimagesize( $feed->media_url );
+			$width = $width * .5 ;
+			$height = $height * .5 ;
+
+			$this->outputHTML( "<p><img src=\"" .$feed->media_url. "\" alt=\"" .$feed->caption. " height=\"" .height. "\" width=\"" .$width. "\" \"></p>" );
+			$this->outputHTML( "<p>" .$feed->caption. "</p>" );
+
+		} elseif( $type == 'list' ) {
+
+			if( !empty( $feed->media_url )) {
+
+				$template->outputHTML( "<ul><li><a href='" .$feed->{'permalink'}. "' alt='" .$feed->{'caption'}. "'>" .$feed->{'caption'}. "</a></li></ul>" );
+
+			}
+
+		}
 
 	}
 
