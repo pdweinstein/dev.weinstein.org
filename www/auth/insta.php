@@ -5,8 +5,8 @@
     use EspressoDev\InstagramBasicDisplay\InstagramBasicDisplay;
 
     $instagram = new InstagramBasicDisplay([
-        'appId' => '1018746275285857', // Move to config
-        'appSecret' => 'cbb3a371f3d21360fc328df8b18815b4', //Move to config
+        'appId' => '', 
+        'appSecret' => '', 
         'redirectUri' => 'https://www.weinstein.org/ig/auth/insta/'
     ]);
 
