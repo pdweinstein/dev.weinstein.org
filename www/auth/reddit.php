@@ -5,9 +5,9 @@
     use EspressoDev\InstagramBasicDisplay\InstagramBasicDisplay;
 
     $instagram = new InstagramBasicDisplay([
-        'appId' => '',
-        'appSecret' => '',
-        'redirectUri' => 'https://www.weinstein.org/ig/'
+        'appId' => '', //Move to config
+        'appSecret' => '', //Move to config
+        'redirectUri' => 'https://www.weinstein.org/auth/reddit/'
     ]);
 
     $code = $_GET['code'];
