@@ -1,65 +1,43 @@
 <?php
 
-    include_once('../../lib/model/server/php/InstagramBasicDisplay.php');
-    include_once('../../lib/model/server/php/InstagramBasicDisplayException.php');
-    use EspressoDev\InstagramBasicDisplay\InstagramBasicDisplay;
+    include_once( '../../../config.php' );
 
-    $instagram = new InstagramBasicDisplay([
-        'appId' => '', //Move to config
-        'appSecret' => '', //Move to config
-        'redirectUri' => 'https://www.weinstein.org/auth/reddit/'
-    ]);
+    // vars to get access token
+    $url ='https://ssl.reddit.com/api/v1/access_token';
 
-    $code = $_GET['code'];
-    $location = 'remote';
-    $mhost = '127.0.0.1';
-    $mport = '11211';
+    $fields = array (
+        'grant_type' => 'client_credentials',
+        'duration' => 'permanent'
+    );
 
-    if ( $location != 'local' ) {
-    
-        $memcache = new Memcache;
-        $memcache->addServer( $mhost, $mport );
-		    
-        if ( $token = $memcache->get( 'igToken' )) {
+    $userAgent = 'www.weinstein.org Reddit Bot - v1';
 
-            $instagram->setAccessToken( $token );
-            #echo "From cache: " .$token;
+    $field_string = http_build_query( $fields );
 
-	}
+    $curl = curl_init( $url );
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array( 'Authorization: Basic ' . base64_encode( $redditID . ':' . $redditSecret )));
+    curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+    curl_setopt( $curl, CURLOPT_USERAGENT, $userAgent );
+    curl_setopt( $curl, CURLOPT_POST, 1 );
+    curl_setopt( $curl, CURLOPT_POSTFIELDS, $field_string );
 
-    }
-    
-    if (( !empty( $token )) OR
-         ( !empty( $code ))) {
+    $response = curl_exec( $curl );
+    $err = curl_error( $curl );
+    curl_close( $curl );
 
-            // Get the short lived access token (valid for 1 hour)
-            $token = $instagram->getOAuthToken($code, true);
+    $response = json_decode( $response, true );
+    var_dump( $response ); // access_token should be here
 
-            // Exchange this token for a long lived token (valid for 60 days)
-            $token = $instagram->getLongLivedToken($token, true);
+    $curl = curl_init('https://oauth.reddit.com/user/pdweinstein/submitted');
+    curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Authorization: bearer ' . $response['access_token'] ) );
+    curl_setopt($curl,CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl,CURLOPT_USERAGENT, $userAgent);
 
-            if( $location != 'local' ) {
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
 
-                $memcache = new Memcache;
-                $memcache->addServer( $mhost, $mport );
-
-#                $token = $instagram->getAccessToken();
-#	        $token = $instagram->refreshToken( $token, true );
-
-		$memcache->set( 'igToken', $token, MEMCACHE_COMPRESSED, 2592000 );
-
-	    }
-
-        $instagram->setAccessToken($token);
-
-        $profile = $instagram->getUserProfile();
-
-	var_dump( $instagram->getUserMedia());
-
-    } else {
-
-        echo "<a href='{$instagram->getLoginUrl()}'>Login with Instagram</a>";
-
-    }
+    $response = json_decode($response, true);
+    var_dump($response); // data should be here
 
 ?>
