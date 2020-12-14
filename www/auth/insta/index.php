@@ -1,13 +1,14 @@
 <?php
 
-    include_once('../../lib/model/server/php/InstagramBasicDisplay.php');
-    include_once('../../lib/model/server/php/InstagramBasicDisplayException.php');
+    include_once( '../../../config.php' );
+    include_once('../../../lib/model/server/php/InstagramBasicDisplay.php');
+    include_once('../../../lib/model/server/php/InstagramBasicDisplayException.php');
     use EspressoDev\InstagramBasicDisplay\InstagramBasicDisplay;
 
     $instagram = new InstagramBasicDisplay([
-        'appId' => '1018746275285857', // Move to config
-        'appSecret' => 'cbb3a371f3d21360fc328df8b18815b4', //Move to config
-        'redirectUri' => 'https://www.weinstein.org/ig/auth/insta/'
+        'appId' => $instaID,
+        'appSecret' => $instaSecret,
+        'redirectUri' => $instaRedirectUri
     ]);
 
     $code = $_GET['code'];

@@ -201,7 +201,7 @@ class template {
 
 			if( !empty( $feed->media_url )) {
 
-				$template->outputHTML( "<ul><li><a href='" .$feed->{'permalink'}. "' alt='" .$feed->{'caption'}. "'>" .$feed->{'caption'}. "</a></li></ul>" );
+				$this->outputHTML( "<ul><li><a href='" .$feed->{'permalink'}. "' alt='" .$feed->{'caption'}. "'>" .$feed->{'caption'}. "</a></li></ul>" );
 
 			}
 
