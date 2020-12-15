@@ -42,23 +42,69 @@ class outside {
 	
 	public function getGitHubEvents() {
 		
-		#$events = simplexml_load_file( 'https://api.github.com/users/pdweinstein/events/public' );
-	
-		#$feed = file_get_contents( 'https://api.github.com/users/pdweinstein/events/public' );
 		$feed = $this->fetchURL( 'https://api.github.com/users/pdweinstein/events/public' );
 		$events = json_decode( $feed );
 		
 		return $events;
 		
 	}
+
+    public function getRedditToken( $redditID, $redditSecret ) {
+
+        $url ='https://ssl.reddit.com/api/v1/access_token';
+
+        $fields = array (
+            'grant_type' => 'client_credentials',
+        );
+
+        $headers = array( 'Authorization: Basic ' . base64_encode( $redditID . ':' . $redditSecret ));
+
+        $response = $this->postURL( $url, $fields, $headers );
+        $response = json_decode( $response, true );
+        
+        return $response['access_token'];
+
+    }
+
+    public function getRedditPosts( $accessToken ) {
+
+        $url = 'https://oauth.reddit.com/user/pdweinstein/submitted';
+        $headers = array('Authorization: bearer ' .$accessToken );
+
+        $response = $this->fetchURL( $url, $headers );
+        $response = json_decode( $response, true );
+
+        return $response['data']['children'];
+
+    }
 	
-        function fetchURL( $url ){
+    function postURL( $url, $fields, $header ){
+
+        $field_string = http_build_query( $fields );
+
+        $curl = curl_init( $url );
+        curl_setopt( $curl, CURLOPT_HTTPHEADER, $header );
+        curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt( $curl, CURLOPT_USERAGENT, 'Weinstein.org Bot' );
+        curl_setopt( $curl, CURLOPT_POST, 1 );
+        curl_setopt( $curl, CURLOPT_POSTFIELDS, $field_string );
+
+        $response = curl_exec( $curl );
+        $err = curl_error( $curl );
+        curl_close( $curl );
+
+        return $response; 
+
+    }
+
+    function fetchURL( $url, $header = '' ){
 	    		
             $curl_handle=curl_init();
             curl_setopt( $curl_handle, CURLOPT_URL, $url );
+            curl_setopt( $curl_handle, CURLOPT_HTTPHEADER, $header );
             curl_setopt( $curl_handle, CURLOPT_CONNECTTIMEOUT, 2 );
             curl_setopt( $curl_handle, CURLOPT_RETURNTRANSFER, 1 );
-            curl_setopt( $curl_handle, CURLOPT_USERAGENT, 'PHP cURL' );
+            curl_setopt( $curl_handle, CURLOPT_USERAGENT, 'Weinstein.org Bot' );
             $query = curl_exec( $curl_handle );
             curl_close( $curl_handle );
 							

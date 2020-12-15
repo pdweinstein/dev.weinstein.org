@@ -209,6 +209,20 @@ class template {
 
 	}
 
+    public function outputReddit( $feed, $type ) {
+
+        if( $type == 'main' ) { 
+
+			$this->outputHTML("<p><img src = '" .$feed['preview']['images'][0]['resolutions'][3]['url']. "'><br/><a href='https://www.reddit.com/" .$feed[ 'permalink']. "'>" .$feed['title']. "</a> posted to <a href='https://www.reddit.com/" .$feed['subreddit_name_prefixed']. "'>" .$feed['subreddit']. "</a></p>");
+
+} elseif( $type == 'list' ) {
+
+			$this->outputHTML("<ul><li><a href='https://www.reddit.com/" .$feed[ 'permalink']. "'>" .$feed['title']. "</a> posted to <a href='https://www.reddit.com/" .$feed['subreddit_name_prefixed']. "'>" .$feed['subreddit']. "</a></li></ul>");
+		
+        }
+
+    }
+
 	public function outputblog( $feed ) {
 
 		$this->outputHTML( "<p>" .( string) $feed->summary. "</p>" );

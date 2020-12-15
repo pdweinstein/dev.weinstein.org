@@ -141,6 +141,10 @@
 
 		$template->outputBlog( $feed['blog'] );
 
+    } elseif( $latest == 'reddit' ) {
+
+        $template->outputReddit( $feed['reddit'], 'main' );
+
 }
 
     $template->outputHTML("
@@ -198,6 +202,11 @@ echo $postData[$k]["message"];
 	$template->outputHTML("				
 					<li><a href=\"https://www.linkedin.com/in/pdweinstein\" alt\"LinkedIn\">LinkedIn</a></li>
 					<li><a href=\"https://www.reddit.com/user/pdweinstein\" alt\"Reddit\">Reddit</a></li>
+	");
+
+    $template->outputReddit( $feed['reddit'], 'list' );
+
+    $template->outputHTML("				
 				<li><a href=\"https://twitter.com/pdweinstein\" alt\"Twitter\">Twitter</a><ul><li>
 	");
 

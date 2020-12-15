@@ -26,18 +26,19 @@
     curl_close( $curl );
 
     $response = json_decode( $response, true );
-    var_dump( $response ); // access_token should be here
+    //var_dump( $response ); // access_token should be here
 
-    $curl = curl_init('https://oauth.reddit.com/user/pdweinstein/submitted');
-    curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Authorization: bearer ' . $response['access_token'] ) );
-    curl_setopt($curl,CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curl,CURLOPT_USERAGENT, $userAgent);
+    $curl = curl_init( 'https://oauth.reddit.com/user/pdweinstein/submitted' );
+    curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Authorization: bearer ' . $response['access_token'] ));
+    curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+    curl_setopt( $curl, CURLOPT_USERAGENT, $userAgent );
 
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-    curl_close($curl);
+    $response = curl_exec( $curl );
+    $err = curl_error( $curl );
+    curl_close( $curl );
 
-    $response = json_decode($response, true);
-    var_dump($response); // data should be here
+    $response = json_decode( $response, true );
+    //var_dump( $response ); // data should be here
+    var_dump( $response['data']['children'][0] );
 
 ?>
