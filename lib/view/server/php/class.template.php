@@ -226,7 +226,7 @@ class template {
 	public function outputblog( $feed ) {
 
 		$this->outputHTML( "<p>" .( string) $feed->summary. "</p>" );
-		$this->outputHTML( "<p align=\"right\">Read: <a href=\"" .$feed->link['href']. "\">" .(string) $feed->title. "</a></p>");
+		$this->outputHTML( "<p align=\"right\">Continue Reading: <a href=\"" .$feed->link['href']. "\">" .(string) $feed->title. "</a></p>");
 
 	}
 

@@ -220,7 +220,7 @@ echo $postData[$k]["message"];
 	</div>
 	<nav class=\"navbar fixed-bottom navbar-light bg-light\">
 		<p>
-			]LOAD WWW.WEINSTEIN.ORG <br/> ]RUN <br/> COPYRIGHT PAUL WEINSTEIN (c) 1997 - 2020
+			]LOAD WWW.WEINSTEIN.ORG <br/> ]RUN <br/> COPYRIGHT PAUL WEINSTEIN (c) 1997 - 2021
 		</p>
 	</nav>
 	");
