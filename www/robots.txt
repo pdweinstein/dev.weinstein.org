@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /auth/
+Disallow: /js/
+Disallow: /media/
+Disallow: /files/
+
+Disallow: /blog/wp-content/plugins/
+Disallow: /blog/wp-admin/
+Disallow: /blog/readme.html
+
+Sitemap: https://www.weinstein.org/sitemap.xml
