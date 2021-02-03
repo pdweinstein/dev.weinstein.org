@@ -7,6 +7,8 @@ if [[ -z "$1" ]]; then
 elif [[ $1 == "prod" ]]; then
 
 	# Sync from home/repo to prod
+	rsync -a --delete /home/pdw/dev.weinstein.org/www/sitemap.xml /var/www/html/sitemap.xml;
+	rsync -a --delete /home/pdw/dev.weinstein.org/www/robots.txt /var/www/html/robots.txt;
 	rsync -a --delete /home/pdw/dev.weinstein.org/www/index.php /var/www/html/index.php;
 	rsync -a --delete /home/pdw/dev.weinstein.org/www/after-dark/ /var/www/html/after-dark;
 	rsync -a --delete /home/pdw/dev.weinstein.org/lib/ /var/www/lib;
