@@ -230,24 +230,14 @@ echo $postData[$k]["message"];
 	$template->outputJS( $template->js );
 	// Local JS code
 	echo "
-    <script> 
-        $( \".window\" ).draggable();
-        $( \".ad\" ).hide();
-        $( \".adIcon\" ).click(function( event ) {
-            event.preventDefault();
-            $( \".ad\" ).show( \"scale\", { percent: 0 }, 500 );
-        });
-        $( \".adc\" ).click(function( event ) {
-            event.preventDefault();
-            $( \".ad\" ).hide( \"scale\", { percent: 0 }, 500 );
-        });
-    </script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '" .$gAnalyticsID. "');
-    </script>";
-	$template->outputHTML( "</body></html>" );
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-N49SV33M4E\"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', '" .$gAnalyticsID. "');
+</script>";
+	$template->outputHTML( "</body></html>" );
 ?>
