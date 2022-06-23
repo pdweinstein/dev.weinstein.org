@@ -45,7 +45,6 @@ class template {
 		0 => array( "type" => "text/javascript", "src" => "/js/jquery-3.3.1.min.js" ),
 		1 => array( "type" => "text/javascript", "src" => "/js/bootstrap.min.js" ),
 		2 => array( "type" => "text/javascript", "src" => "/js/jquery-ui.min.js" ),
-		3 => array( "type" => "text/javascript", "src" => "https://www.googletagmanager.com/gtag/js" )
         );
 
 	var $link = array(
